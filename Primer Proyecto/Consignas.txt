@@ -1,0 +1,16 @@
+Para la realización del proyecto 1 deberán tomar la implementación de matrices que se adjunta y modificarla de forma de:
+
+1.- que las matrices (en dos dimensiones) puedan ser creadas de cualquier tamaño (nxm) adaptándolas para que los elementos sean de tipo float. 
+Para esto tendrán que usar memoria dinámica y y agregar dos operaciones, una "createMatrix" que reserve la memoria y otra "deleteMatrix" que 
+la libere (ver transparencias sobre memoria dinámica) y ejemplos asociados). Un cuestión adicional es que se espera que el tamaño de la matriz 
+sea un dato almacenado en la estructura de representación de la matriz, lo que hará que deban implementar funciones "rows" y "cols" que permitan 
+saber el tamaño en ambas dimensiones,
+
+2.- modificar la función "loadMatrix" para que lea los datos de un FILE* pasado como parámetro y crear una función "saveMatrix" que grabe los datos 
+de un FILE* pasado como parámetro
+
+3.- agregar manejo de errores a todas las operaciones. Se deben considerar todos los errores posibles, por ejemplo, no hay memoria disponible, 
+no pudo abrirse el archivo, el tamaño de las matrices no corresponde si se está intentando una multiplicación, etc. y
+
+4.- compilen la implementación de matrices como biblioteca dinámica y creen un directorio llamado tests en que deben colocar archivos, cada uno conteniendo 
+un main distinto que permita testear todas las operaciones por separado, es decir, cada operación es testeada por un main específico.

@@ -7,18 +7,18 @@ Personas::~Personas()
 
 }
 
-string Personas::getNombre()
+string Personas::getNombre() const
 {
 	return this->nombre;
 }
 
 
-int Personas::getEdad()
+int Personas::getEdad() const
 {
 	return this->edad;
 }
 
-int Personas::getDNI()
+int Personas::getDNI() const
 {
 	return this->DNI;
 }

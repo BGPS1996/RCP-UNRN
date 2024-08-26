@@ -23,9 +23,9 @@ class Lista{
 		void InsertarDatoPosicion(T, int);
 
 
-		void ImprimirLista();
-		bool EstaVacia();
-		int LongitudLista();
+		void ImprimirLista() const;
+		bool EstaVacia() const;
+		int LongitudLista() const;
 
 		void VaciarLista();
 		void SuprimirDato(T);
@@ -33,7 +33,7 @@ class Lista{
 		T SuprimirDatoPosicion(int pos);
 		
 		T DevolverDatoPosicion(int pos);
-		bool ExisteDato(T);
+		bool ExisteDato(T) const;
 		
 		
 };

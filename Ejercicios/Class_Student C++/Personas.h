@@ -14,9 +14,9 @@ public:
 	Personas(string name, int n, int dni): nombre(name), edad(n), DNI(dni) { }
 	Personas() : nombre("NN"), edad(0), DNI(0) { }
 	~Personas();
-	string getNombre()const;
-	int getEdad()const;
-	int getDNI()const;
+	string getNombre() const;
+	int getEdad() const;
+	int getDNI() const;
 
 	void setNombre(string);
 	void setEdad(int);

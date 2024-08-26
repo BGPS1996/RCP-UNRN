@@ -60,7 +60,7 @@ void Lista<T>::InsertarUltimo(T x)
 }
 
 template <class T>
-void Lista<T>::ImprimirLista()
+void Lista<T>::ImprimirLista() const
 {
     struct Nodo *aux;
     aux = inicio;
@@ -76,7 +76,7 @@ void Lista<T>::ImprimirLista()
 }
 
 template <class T>
-bool Lista<T>::EstaVacia()
+bool Lista<T>::EstaVacia() const
 {
     return (dim == 0);
 }
@@ -192,7 +192,7 @@ T Lista<T>::SuprimirDatoPosicion(int pos)
 }
 
 template <class T>
-int Lista<T>::LongitudLista()
+int Lista<T>::LongitudLista() const
 {
     return dim;
 }
@@ -232,7 +232,7 @@ T Lista<T>::DevolverDatoPosicion(int pos)
 }
 
 template <class T>
-bool Lista<T>::ExisteDato(T x)
+bool Lista<T>::ExisteDato(T x) const
 {
     struct Nodo *aux;
 	aux = inicio;

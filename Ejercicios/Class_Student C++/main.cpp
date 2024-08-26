@@ -4,10 +4,14 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[])
-{
-	Estudiante antonio;
+int main() {
+    Estudiante est("Juan Perez", 20, 12345678);
+    est.addMateria("Matemáticas");
+    est.addMateria("Física");
+    est.addMateria("Química");
 
-	cout<< antonio;
-	return 0;
+    cout << est << endl;  // Imprime los datos del estudiante
+    //est.showMaterias();   // Imprime la lista de materias aprobadas
+
+    return 0;
 }

@@ -20,10 +20,11 @@ public:
 	~Estudiante() = default;
 
 	void addMateria(string);
+	void showMaterias();
 
 	friend ostream& operator<< (ostream& os, const Estudiante& e)
 	{
-		os << "NOMBRE "<< e.getNombre() <<endl
+		os << "NOMBRE: "<< e.getNombre() <<endl
 			<< "EDAD: "<< e.getEdad() <<endl
 			<< "DNI: "<< e.getDNI() <<endl;
 		return os;

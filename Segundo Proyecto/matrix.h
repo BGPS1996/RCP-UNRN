@@ -1,6 +1,8 @@
 #ifndef C3_MATRIX_H
 #define C3_MATRIX_H
+
 #include <iostream>
+#include <exception>
 
 using namespace std;
 template <class T>

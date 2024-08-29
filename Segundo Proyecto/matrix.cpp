@@ -2,7 +2,6 @@
 
 #include "C3-matrix.h"
 
-using namespace std;
 template <class T>
 matrix<T>::matrix()
 {
@@ -15,18 +14,27 @@ matrix<T>::matrix()
 template <class T>
 matrix<T>::matrix(int f, int c)
 {
-	if( f < 0 || c < 0)
-		throw::invalid_argument("ERROR 1: La dimension de la fila o columna son invalidas\n");
+	if( f <= 0 || c <= 0)
+		throw invalid_argument("ERROR 1: La dimension de la fila o columna son invalidas");
 
 	this->rows = f;
 	this->cols = c;
-	this->array = new T[rows]{};
-
-	for (int i = 0; i < rows; ++i)
-	{
-		array[i] = new T*[cols]{}; // las {} para evitar la basura
+	this->array = new T*[rows]{};
+	
+	// Manejador de excepsiones por si hay un error en el guardado en la memoria
+	try{
+		for (int i = 0; i < this->rows; ++i)
+		{
+			array[i] = new T[cols]{};
+		}
+	}catch(const bad_alloc& e){
+        for (int i = 0; i < this->rows; ++i)
+        {
+            delete[] this->array[i];
+        }
+        delete[] this->array;
+        //throw; // En caso de utilizar un catch externo a mi constructor
 	}
-
 }
 
 template <class T>
@@ -44,23 +52,33 @@ matrix<T>::matrix(const matrix<T> &other)
 {
 	this->rows = other.rows;
 	this->cols = other.cols;
-	this->array = new T[rows];
-
-	for (int i = 0; i < rows; ++i)
-	{
-		this->array[i] = new T*[cols];
-		for (int i = 0; i < cols; ++i)
+	
+	try{
+		this->array = new T[rows];
+	
+		for (int i = 0; i < rows; ++i)
 		{
-			this->array[i][j] = other.array[i][j];
+			this->array[i] = new T*[cols];
+			for (int i = 0; i < cols; ++i)
+			{
+				this->array[i][j] = other.array[i][j];
+			}
 		}
+	}catch(const bad_alloc& e){
+        for (int i = 0; i < this->rows; ++i)
+        {
+            delete[] this->array[i];
+        }
+        delete[] this->array;
+        //throw; // En caso de utilizar un catch externo a mi constructor		
 	}
 }
 
 template<class T>
-int matrix<T>::FgetRows(ifstream& file)
+int matrix<T>::FgetRows(ifstream &file)
 {
 	if(file == NULL)
-		throw::invalid_argument("ERROR 2: Archivo vacio\n");
+		throw runtime_error("ERROR 2: Archivo vacio");
 	else{
 		fseek(file, 0, SEEK_SET);
 		fscanf(file, "%d", &(this->rows));
@@ -69,10 +87,10 @@ int matrix<T>::FgetRows(ifstream& file)
 	}
 }
 template<class T>
-int matrix<T>::FgetCols(ifstream& file)
+int matrix<T>::FgetCols(ifstream &file)
 {
 	if(file == NULL)
-		throw::invalid_argument("ERROR 2: Archivo vacio\n");
+		throw runtime_error("ERROR 2: Archivo vacio");
 	else{
 		fseek(file, 0, SEEK_SET);
 		fscanf(file, "%*d %d", &(this->cols));
@@ -84,6 +102,9 @@ int matrix<T>::FgetCols(ifstream& file)
 template <class T>
 void matrix<T>::FloadMatrix(ifstream& file)
 {
+	if(!(file.is_open()))
+		throw runtime_error("ERROR 4: No se pudo abrir el archivo");
+
     fseek(file, 0, SEEK_SET);   // puntero al inicio.
     fscanf(file, "%*d %*d");    // Ignoro fila y columnas.
 

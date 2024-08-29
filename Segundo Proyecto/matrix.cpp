@@ -8,7 +8,6 @@ matrix<T>::matrix()
 	this->rows = 0;
 	this->cols = 0;
 	this->array = nullptr;
-
 }
 
 template <class T>
@@ -100,7 +99,7 @@ int matrix<T>::FgetCols(ifstream &file)
 }
 
 template <class T>
-void matrix<T>::FloadMatrix(ifstream& file)
+void matrix<T>::FloadMatrix(ifstream &file)
 {
 	if(!(file.is_open()))
 		throw runtime_error("ERROR 4: No se pudo abrir el archivo");
@@ -135,4 +134,42 @@ void matrix<T>::scalarProduct(T scalar)
 	}
 }
 
+template<class T>
+matrix<T> operator+(const matrix<T> &_this, matrix<T> _other)
+{
+	if(!(_this.rows == _other.rows && _this.cols == _other.cols))
+		throw invalid_argument("ERROR 5: Las matrices tienen distintas dimesiones");
 
+	matrix<T> resultadoado(_this.rows, _this.cols);
+	for (int i = 0; i < _this.rows; ++i)
+	{
+		for (int j = 0; j < _this.cols; ++j)
+		{
+			resultadoado[i][j] = _this.array[i][j] + _other.array[i][j];
+		}
+	}
+	return resultadoado;
+}
+
+template <class T>
+matrix<T> operator*(const matrix<T>& _this, const matrix<T>& _other) {
+    if (_this.cols != _other.rows) {
+        throw invalid_argument("ERROR 6: Las dimensiones de las matrices no son compatibles para la multiplicación.");
+    }
+
+    matrix<T> resultado(_this.rows, _other.cols);
+    for (int i = 0; i < resultado.rows; ++i) {
+        for (int j = 0; j < resultado.cols; ++j) {
+            resultado.array[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < _this.rows; ++i) {
+        for (int j = 0; j < _other.cols; ++j) {
+            for (int k = 0; k < _this.cols; ++k) {
+                resultado.array[i][j] += _this.array[i][k] * _other.array[k][j];
+            }
+        }
+    }
+
+    return resultado;
+}

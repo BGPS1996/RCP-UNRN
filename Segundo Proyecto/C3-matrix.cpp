@@ -32,7 +32,7 @@ matrix<T>::matrix(int f, int c)
             delete[] this->array[i];
         }
         delete[] this->array;
-        //throw; // En caso de utilizar un catch externo a mi constructor
+        throw; // En caso de utilizar un catch externo a mi constructor
 	}
 }
 
@@ -69,30 +69,39 @@ matrix<T>::matrix(const matrix<T> &other)
             delete[] this->array[i];
         }
         delete[] this->array;
-        //throw; // En caso de utilizar un catch externo a mi constructor		
+        throw; // En caso de utilizar un catch externo a mi constructor		
 	}
 }
 
 template<class T>
-int matrix<T>::FgetRows(ifstream &file)
+int matrix<T>::FgetRows(ifstream &file) const
 {
-	if(file == NULL)
+	if(!file.is_open())
 		throw runtime_error("ERROR 2: Archivo vacio");
 	else{
-		fseek(file, 0, SEEK_SET);
-		fscanf(file, "%d", &(this->rows));
+		
+		file.seekg(0, ios::beg);
+		file >> this->rows;
+
+		//fseek(file, 0, SEEK_SET);
+		//fscanf(file, "%d", &(this->rows));
 
 		return this->rows;
 	}
 }
 template<class T>
-int matrix<T>::FgetCols(ifstream &file)
+int matrix<T>::FgetCols(ifstream &file) const
 {
-	if(file == NULL)
+	if(!file.is_open())
 		throw runtime_error("ERROR 2: Archivo vacio");
 	else{
-		fseek(file, 0, SEEK_SET);
-		fscanf(file, "%*d %d", &(this->cols));
+		file.seekg(0,ios::beg);
+		int temp;
+
+		file >> temp >> this->cols;
+		
+		//fseek(file, 0, SEEK_SET);
+		//fscanf(file, "%*d %d", &(this->cols));
 
 		return this->cols;
 	}	
@@ -101,15 +110,19 @@ int matrix<T>::FgetCols(ifstream &file)
 template <class T>
 void matrix<T>::FloadMatrix(ifstream &file)
 {
-	if(!(file.is_open()))
+	if(!file.is_open())
 		throw runtime_error("ERROR 4: No se pudo abrir el archivo");
 
-    fseek(file, 0, SEEK_SET);   // puntero al inicio.
-    fscanf(file, "%*d %*d");    // Ignoro fila y columnas.
+	file.seekg(0, ios::beg);
+	int temp;
+	file >> temp >> temp;
+
+    //fseek(file, 0, SEEK_SET);   // puntero al inicio.
+    //fscanf(file, "%*d %*d");    // Ignoro fila y columnas.
 
     for (int i = 0; i < rows; i++)
         for (int j = 0; j < cols; j++)
-            fscanf(file, "%T", &(this->array[i][j]));	
+            file >> this->array[i][j];
 }
 template <class T>
 void matrix<T>::showMatrix()
@@ -135,21 +148,22 @@ void matrix<T>::scalarProduct(T scalar)
 }
 
 template<class T>
-matrix<T> operator+(const matrix<T> &_this, matrix<T> _other)
+matrix<T> operator+(const matrix<T>& _this, const matrix<T>& _other)
 {
-	if(!(_this.rows == _other.rows && _this.cols == _other.cols))
-		throw invalid_argument("ERROR 5: Las matrices tienen distintas dimesiones");
+    if (!(_this.rows == _other.rows && _this.cols == _other.cols))
+        throw std::invalid_argument("ERROR 5: Las matrices tienen distintas dimensiones");
 
-	matrix<T> resultadoado(_this.rows, _this.cols);
-	for (int i = 0; i < _this.rows; ++i)
-	{
-		for (int j = 0; j < _this.cols; ++j)
-		{
-			resultadoado[i][j] = _this.array[i][j] + _other.array[i][j];
-		}
-	}
-	return resultadoado;
+    matrix<T> resultado(_this.rows, _this.cols);
+    for (int i = 0; i < _this.rows; ++i)
+    {
+        for (int j = 0; j < _this.cols; ++j)
+        {
+            resultado.array[i][j] = _this.array[i][j] + _other.array[i][j];
+        }
+    }
+    return resultado;
 }
+
 
 template <class T>
 matrix<T> operator*(const matrix<T>& _this, const matrix<T>& _other) {
@@ -170,6 +184,5 @@ matrix<T> operator*(const matrix<T>& _this, const matrix<T>& _other) {
             }
         }
     }
-
     return resultado;
 }

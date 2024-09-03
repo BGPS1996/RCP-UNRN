@@ -22,9 +22,6 @@ public:
     ~matrix();
     matrix(const matrix<T> &); // constructor copia
 
-    int FgetRows(ifstream &); // Dato en la estructura de representación de la matriz
-    int FgetCols(ifstream &); // Dato en la estructura de representación de la matriz
-
     int getRows() const { return rows; } // Obtener fila de la matriz
     int getCols() const { return cols; } // Obtener columna de la matriz
 
@@ -42,7 +39,7 @@ public:
     /* ERROR 2: Archivo vacio.                                                                */
     /* ERROR 3: Las dimensiones de las matrices no permiten la multiplicación.                */
     /* ERROR 4: No se pudo abrir el archivo.                                                  */
-    /* ERROR 5: Las matrices tienen distintas dimesiones.                                     */
+    /* ERROR 5: escalar igual a  cero.				   	                                      */
     /* ERROR 6: Las dimensiones de las matrices no son compatibles para la multiplicación.    */
     /************************************** ERRORES *******************************************/
 };

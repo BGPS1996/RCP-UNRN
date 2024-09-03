@@ -77,46 +77,43 @@ matrix<T>::matrix(const matrix<T> &other)
 }
 
 template <class T>
-int matrix<T>::FgetRows(ifstream &file)
-{
-    if (!file.is_open())
-        throw runtime_error("ERROR 2: Archivo vacio");
-    else
-    {
-        file.seekg(0, ios::beg);
-        file >> this->rows;
-        return this->rows;
-    }
-}
-
-template <class T>
-int matrix<T>::FgetCols(ifstream &file)
-{
-    if (!file.is_open())
-        throw runtime_error("ERROR 2: Archivo vacio");
-    else
-    {
-        file.seekg(0, ios::beg);
-        int temp;
-        file >> temp >> this->cols;
-        return this->cols;
-    }
-}
-
-template <class T>
 void matrix<T>::FloadMatrix(ifstream &file)
 {
     if (!file.is_open())
         throw runtime_error("ERROR 4: No se pudo abrir el archivo");
 
-    file.seekg(0, ios::beg);
-    int temp;
-    file >> temp >> temp;
+    int fileRows, fileCols;
+    file >> fileRows >> fileCols;
 
-    for (int i = 0; i < rows; i++)
-        for (int j = 0; j < cols; j++)
+    if (this->array != nullptr)
+    {
+        for (int i = 0; i < this->rows; ++i)
+        {
+            delete[] this->array[i];
+        }
+        delete[] this->array;
+    }
+
+    this->rows = fileRows;
+    this->cols = fileCols;
+
+    this->array = new T *[rows];
+    for (int i = 0; i < rows; ++i)
+    {
+        this->array[i] = new T[cols];
+    }
+
+    // Leer valores del archivo
+    for (int i = 0; i < this->rows; i++)
+    {
+        for (int j = 0; j < this->cols; j++)
+        {
             file >> this->array[i][j];
+        }
+    }
 }
+
+
 
 template <class T>
 void matrix<T>::showMatrix()
@@ -133,39 +130,21 @@ void matrix<T>::showMatrix()
 template <class T>
 void matrix<T>::scalarProduct(T scalar)
 {
+	 if (scalar == 0)
+        throw invalid_argument("ERROR 5: escalar igual a cero");
+
     for (int i = 0; i < this->rows; ++i)
     {
         for (int j = 0; j < this->cols; ++j)
-        {
             this->array[i][j] *= scalar;
-        }
-    }
-}
-
-template <class T>
-matrix<T> operator+(const matrix<T> &_this, const matrix<T> &_other)
-{
-    if (!(_this.rows == _other.rows && _this.cols == _other.cols))
-        throw invalid_argument("ERROR 5: Las matrices tienen distintas dimensiones");
-
-    matrix<T> resultado(_this.rows, _this.cols);
-    for (int i = 0; i < _this.rows; ++i)
-    {
-        for (int j = 0; j < _this.cols; ++j)
-        {
-            resultado.array[i][j] = _this.array[i][j] + _other.array[i][j];
-        }
-    }
-    return resultado;
+    } 
 }
 
 template <class T>
 matrix<T> operator*(const matrix<T> &_this, const matrix<T> &_other)
 {
     if (_this.cols != _other.rows)
-    {
         throw invalid_argument("ERROR 6: Las dimensiones de las matrices no son compatibles para la multiplicación.");
-    }
 
     matrix<T> resultado(_this.rows, _other.cols);
     for (int i = 0; i < _this.rows; ++i)
@@ -173,10 +152,9 @@ matrix<T> operator*(const matrix<T> &_this, const matrix<T> &_other)
         for (int j = 0; j < _other.cols; ++j)
         {
             for (int k = 0; k < _this.cols; ++k)
-            {
                 resultado.array[i][j] += _this.array[i][k] * _other.array[k][j];
-            }
         }
     }
     return resultado;
 }
+ 

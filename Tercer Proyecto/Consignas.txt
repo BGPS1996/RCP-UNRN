@@ -1,0 +1,10 @@
+1.- Implementar en C el algoritmo de backtracking para resolver el problema de la mochila reportando todas las soluciones.
+Nota: Recordar que resulta de vital importancia la elección de una representación para las soluciones parciales.
+
+2.- Implementar en C el algoritmo de backtracking para resolver el problema de saber si un caballo de ajedrez es capaz de 
+viajar entre dos posiciones.
+
+3.- Implementar un algoritmo de backtracking para resolver un laberinto descripto como una matriz de nxn de bool en la que las posiciones 
+marcadas como false son interpretadas como pared.
+Nota: No es necesario utilizar la clase matriz implementada previamente, sino que puede usarse una estructura más simple pero el 
+tablero debe ser arbitrario y el algoritmo debe ser paramétrico en este.

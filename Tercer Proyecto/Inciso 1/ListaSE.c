@@ -1,103 +1,102 @@
-
 #include "ListaSE.h"
 
 Lista_T crearLista()
 {
-	Lista_T aux;
-	aux.dim = 0;
-	aux.lista = NULL;
-	return aux;
+    Lista_T aux;
+    aux.dim = 0;
+    aux.lista = NULL;
+    return aux;
 }
 
-void inicializarObjeto(objeto_T *obj)
+void inicializarObjeto(objeto_T *obj, char *name)
 {
+    strncpy(obj->nombre, name, MAX_NAME - 1);
+    obj->nombre[MAX_NAME - 1] = '\0';        
     obj->peso  = rand() % W + 1;
-    obj->valor = rand() % 100;
+    obj->valor = rand() % A;
 }
 
 struct Nodo *crearNodo(objeto_T _obj)
 {
-	struct Nodo *aux;
+    struct Nodo *aux;
 
-	if(!(aux=(struct Nodo*)malloc(sizeof(struct Nodo))))
-	{
-        fprintf(stderr, "ERROR 1: Error alocamiento de memoria\n");
-		exit(1);
-	}
+    if (!(aux = (struct Nodo *)malloc(sizeof(struct Nodo))))
+    {
+        fprintf(stderr, "ERROR 1: Error de alocamiento de memoria\n");
+        exit(1);
+    }
 
-	aux->obj = _obj;
+    aux->obj = _obj;
     aux->sig = NULL;
-	
+
     return aux;
 }
 
 int InsertarPrimero(Lista_T *l, objeto_T obj)
 {
-	struct Nodo *nuevo;
+    struct Nodo *nuevo;
 
-	nuevo = crearNodo(obj);
+    nuevo = crearNodo(obj);
 
-	nuevo->sig = l->lista;
-
-	l->lista = nuevo;
-	(l->dim)++;
-	return 1;
+    nuevo->sig = l->lista;
+    l->lista = nuevo;
+    (l->dim)++;
+    return 1;
 }
 
-int ImprimirLista(Lista_T l )
+int ImprimirLista(Lista_T l)
 {
-	struct Nodo *aux;
-	aux = l.lista;
+    struct Nodo *aux;
+    aux = l.lista;
 
-	if(EstaVacia(l))
-	{
-		printf("Vacia\n");
-		return 0;
-	}
-	
-    while(!aux)
-	{
-		printf(" Peso: %d, Valor: %d \n", aux->obj.peso, aux->obj.valor);
-		aux = aux->sig;
-	}
+    if (EstaVacia(l))
+    {
+        printf("Lista vacía\n");
+        return 0;
+    }
+
+    while (aux != NULL)
+    {
+        printf("%s\t :\t Peso: %d\t Valor: %d\t \n", aux->obj.nombre, aux->obj.peso, aux->obj.valor);
+        aux = aux->sig;
+    }
 
     return 1;
 }
 
 int EstaVacia(Lista_T l)
-	{
-        return !(l.dim);
-    }
+{
+    return !(l.dim);
+}
 
 int VaciarLista(Lista_T *l)
 {
-	struct Nodo *act;
-	while(!EstaVacia(*l))
-	{
-		while(LongitudLista(*l) != 0) //mientras longitud sea mayor a cero.
-		{
-			act = l->lista;
-			l->lista = l->lista->sig;
-			free(act);
-			(l->dim)--;
-		}
-
-	}
-	if(EstaVacia(*l))
-		return 1;
-	return (-1);
+    struct Nodo *act;
+    while (!EstaVacia(*l))
+    {
+        while (LongitudLista(*l) != 0)
+        {
+            act = l->lista;
+            l->lista = l->lista->sig;
+            free(act);
+            (l->dim)--;
+        }
+    }
+    if (EstaVacia(*l))
+        return 1;
+    return -1;
 }
 
 int SuprimirDato(Lista_T *l, objeto_T _obj)
 {
-	struct Nodo *act, *ant;
+    struct Nodo *act, *ant;
 
-	act = l->lista;
-	if(!EstaVacia(*l))
-	{
-		if(act->obj.valor == _obj.valor && act->obj.peso == _obj.peso)
-		{
-		    if(LongitudLista(*l) > 1)
+    act = l->lista;
+    if (!EstaVacia(*l))
+    {
+        if (act->obj.valor == _obj.valor && act->obj.peso == _obj.peso)
+        {
+            if (LongitudLista(*l) > 1)
             {
                 l->lista = act->sig;
                 free(act);
@@ -110,16 +109,16 @@ int SuprimirDato(Lista_T *l, objeto_T _obj)
             free(act);
             (l->dim)--;
 
-		    return 1;
-		}
-        while(act->obj.valor != _obj.valor && act->obj.peso != _obj.peso)
+            return 1;
+        }
+        while (act->obj.valor != _obj.valor && act->obj.peso != _obj.peso)
         {
             ant = act;
             act = act->sig;
         }
-		if(act->obj.valor == _obj.valor && act->obj.peso == _obj.peso)
+        if (act->obj.valor == _obj.valor && act->obj.peso == _obj.peso)
         {
-            if(act->sig == NULL)
+            if (act->sig == NULL)
             {
                 ant->sig = NULL;
                 free(act);
@@ -132,12 +131,11 @@ int SuprimirDato(Lista_T *l, objeto_T _obj)
             (l->dim)--;
 
             return 1;
-
         }
     }
 }
 
 int LongitudLista(Lista_T l)
 {
-	return (l.dim);
+    return (l.dim);
 }

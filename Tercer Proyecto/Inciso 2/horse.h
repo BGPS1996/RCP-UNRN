@@ -18,7 +18,8 @@ public:
 	~horse();
 	
 	movHorse(int _row, int _col); 				// set position
-	void getPosition()const { return position }
+	movHorse(coordenada aux);
+	coordenada getPosition()const { return position }
 	
 };
 

@@ -15,11 +15,11 @@ private:
 public:
 	horse(): position(0, 0) { }
 	horse(int _row, int _col): position(_row, _col) { }
-	~horse();
+	~horse() { }
 	
 	movHorse(int _row, int _col); 				// set position
 	movHorse(coordenada aux);
-	coordenada getPosition()const { return position }
+	coordenada getPosition()const { return position; }
 	
 };
 

@@ -1,0 +1,17 @@
+Implementar una clase grafos template usando como estructura de representación las matrices que implementaron 
+anteriormente. Se espera que tanto los nodos como los arcos puedan tener información asociada (no necesariamente la misma, 
+haciendo que el template posea dos tipos de información). 
+Se espera también que tanto nodos como arcos tengan asociados identificadores de tipo string haciendo que se pueda hacer 
+referencia a ellos por su número entero positivo, o por medio de estos.
+
+Adicionalmente se pide implementar:
+- una función que dado un nodo retorne su vecindario (excluyendo a este)
+- dos funciones que dado un nodo nos retornen los ejes entrantes y salientes, respectivamente
+- dos funciones que dado un eje nos devuelvan su nodo de salida y llegada, respectivamente
+- funciones que permitan proyectar la información asociada a nodos y ejes
+- una función que permita detectar si el grafo es conexo
+- una función que construya el árbol generador mínimo
+- funciones que computen el recorrido BFS y DFS
+Por supuesto que se, adicionalmente se espera contar con infraestructura básica de entrada (<<) y salida (>>), 
+constructores y destructor de la clase y funciones que permitan construir un grafo programáticamente a partir de 
+agregar nodos, ejes y asociarles información.

@@ -1,0 +1,9 @@
+Implementar la solución del problema de la mochila cuyo enunciado figura en las diapositivas de la clase. 
+Se esperan 3 implementaciones: 
+	1) una versión derivada directamente de la definición del problema.
+	2) una versión del algoritmo basado en programación dinámica con un enfoque top-down.
+	3) una versión del algoritmo basado en programación dinámica con un enfoque bottom-up. 
+Para las dos últimas deberán usar su propia implementación de matrices compilada como biblioteca (puede ser estática o dinámica).
+Relice un estudio empírico de comportamiento a partir de exponer el tiempo de ejecución para problemas de tamaño creciente en las 
+dos dimensiones determinadas por los parámetros del problema: la cantidad de objetos disponibles y el tamaño en volumen máximo de 
+la mochila.

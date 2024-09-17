@@ -40,7 +40,7 @@ Lista<coordenada> Backtracking(horse _caballito, Lista<coordenada> *Soluciones, 
     };
 
     coordenada actual = _caballito.getPosition();
-    _tablero[actual.getX()][actual.getY()] = true;
+    _tablero[actual.getX()][actual.getY()] = 1;
 
     for (int i = 0; i < 8; i++)
     {
@@ -62,6 +62,6 @@ Lista<coordenada> Backtracking(horse _caballito, Lista<coordenada> *Soluciones, 
         }
     }
 
-    _tablero[actual.getX()][actual.getY()] = false;
+    _tablero[actual.getX()][actual.getY()] = 0;
     return *Soluciones;
 }

@@ -7,9 +7,9 @@ using namespace std;
 class coordenada
 {
 public:
-	coordenada() : x(0), y(0) {}
-	coordenada(int _x, int _y) : x(_x), y(_y) {}
-	~coordenada() {}  
+	coordenada();
+	coordenada(int _x, int _y);
+	~coordenada() {}
 	
 	int x;
 	int y;

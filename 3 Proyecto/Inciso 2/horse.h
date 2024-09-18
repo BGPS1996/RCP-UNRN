@@ -8,7 +8,6 @@ using namespace std;
 class horse
 {
 private:
-	
 	coordenada position;
 	void setHorse(coordenada);
 	void setHorse(int, int);
@@ -17,8 +16,8 @@ public:
 	horse(int _row, int _col): position(_row, _col) { }
 	~horse() { }
 	
-	movHorse(int _row, int _col); 				// set position
-	movHorse(coordenada aux);
+	void movHorse(int _row, int _col); 				// set position
+	void movHorse(coordenada aux);
 	coordenada getPosition()const { return position; }
 	
 };

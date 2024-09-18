@@ -157,4 +157,3 @@ matrix<T> operator*(const matrix<T> &_this, const matrix<T> &_other)
     }
     return resultado;
 }
- 

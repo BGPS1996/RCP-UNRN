@@ -33,6 +33,22 @@ public:
     friend matrix<U> operator+(const matrix<U> &_this, const matrix<U> &_other);
     template <class U>
     friend matrix<U> operator*(const matrix<U> &_this, const matrix<U> &_other);
+    
+    // Devuelve un puntero de la fila
+    T* operator[](int row) {
+        if (row >= 0 && row < rows) {
+            return array[row];
+        }
+        throw out_of_range("Índice fuera de rango");
+    }
+
+    // con este, en la fila, obtengo el elemento del puntero de la fila
+    const T* operator[](int row) const {
+        if (row >= 0 && row < rows) {
+            return array[row];
+        }
+        throw out_of_range("Índice fuera de rango");
+    }
 
     /************************************** ERRORES *******************************************/
     /* ERROR 1: Dimension de filas o columnas invalidas.                                      */

@@ -10,11 +10,13 @@
 #include "ListaSE.cpp"
 
 using namespace std;
+Lista<coordenada> Backtracking(horse _caballito, Lista<coordenada> *Soluciones, matrix<bool> &_tablero, coordenada objetivo);
 
 int main(int argc, char const *argv[])
 {
 	ifstream file("tablero.txt");
 	matrix<bool> tablero;
+    Lista<coordenada> PosiblesMovimientos;
 
 	tablero.FloadMatrix(file);
 	horse caballito(0,1);
@@ -22,6 +24,16 @@ int main(int argc, char const *argv[])
 	cout << caballito.getPosition();
 	cout<<endl;
 	tablero.showMatrix();
+
+
+    Backtracking(caballito,  &PosiblesMovimientos, tablero, coordenada(3,4));
+
+    PosiblesMovimientos.ImprimirLista();
+
+
+
+
+
 	return 0;
 }
 
@@ -46,8 +58,8 @@ Lista<coordenada> Backtracking(horse _caballito, Lista<coordenada> *Soluciones, 
     {
         coordenada nuevaPosicion = actual + movimientos[i];
 
-        if (nuevaPosicion.getX() >= 0 && nuevaPosicion.getX() < _tablero.size() &&
-            nuevaPosicion.getY() >= 0 && nuevaPosicion.getY() < _tablero[0].size() &&
+        if (nuevaPosicion.getX() >= 0 && nuevaPosicion.getX() < _tablero.getRows() &&
+            nuevaPosicion.getY() >= 0 && nuevaPosicion.getY() < _tablero.getCols() &&
             !_tablero[nuevaPosicion.getX()][nuevaPosicion.getY()])
         {
             _caballito.movHorse(nuevaPosicion);

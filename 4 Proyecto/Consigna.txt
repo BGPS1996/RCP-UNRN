@@ -7,3 +7,5 @@ Para las dos últimas deberán usar su propia implementación de matrices compil
 Relice un estudio empírico de comportamiento a partir de exponer el tiempo de ejecución para problemas de tamaño creciente en las 
 dos dimensiones determinadas por los parámetros del problema: la cantidad de objetos disponibles y el tamaño en volumen máximo de 
 la mochila.
+
+

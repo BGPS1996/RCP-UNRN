@@ -65,7 +65,6 @@ int mochilaTopDown(Lista<objeto> &mochila, int i, int W, vector<vector<int>> &me
         memo[i][W] = max(currentObj.getValor() + mochilaTopDown(mochila, i - 1, W - currentObj.getWeight(), memo),
                          mochilaTopDown(mochila, i - 1, W, memo));
     }
-
     return memo[i][W];
 }
 

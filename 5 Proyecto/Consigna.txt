@@ -15,3 +15,12 @@ Adicionalmente se pide implementar:
 Por supuesto que se, adicionalmente se espera contar con infraestructura básica de entrada (<<) y salida (>>), 
 constructores y destructor de la clase y funciones que permitan construir un grafo programáticamente a partir de 
 agregar nodos, ejes y asociarles información.
+
+
+GrAFO DIRIGIDO, implementar tupla:
+¿MATRIZ de ADYASENCIA!
+set<unsigned long> nodods (void)
+set<tupla<unsigned long, insigned long>> arcos (void)
+unsigned long  agregarNodo(void)
+void setNombreNodeo(string, unsigned long)
+string getNombreNodo (unsigned long)

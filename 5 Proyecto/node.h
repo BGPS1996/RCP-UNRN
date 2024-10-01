@@ -11,8 +11,8 @@ template<class T>
 class edge
 {
 public:
-    string destination;  // Nodo de destino
-    T weight;            // Peso del arco (si es necesario)
+    string destination;  
+    T weight;            
     edge(string dest, T w) : destination(dest), weight(w) { }
 };
 

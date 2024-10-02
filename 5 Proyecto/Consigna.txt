@@ -19,8 +19,10 @@ agregar nodos, ejes y asociarles información.
 
 GrAFO DIRIGIDO, implementar tupla:
 ¿MATRIZ de ADYASENCIA!
+
 set<unsigned long> nodods (void)
 set<tupla<unsigned long, insigned long>> arcos (void)
+
 unsigned long  agregarNodo(void)
 void setNombreNodeo(string, unsigned long)
 string getNombreNodo (unsigned long)

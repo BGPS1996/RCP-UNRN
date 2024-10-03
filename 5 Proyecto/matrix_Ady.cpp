@@ -3,7 +3,7 @@
 template<class T>
 bool adyacente<T>::existeNodo(node<T> Nodo)
 {
-	if(nodes_cont == 0)	// si esta vacio
+	if(nodes_cont == 0)
 		return false;
 	T dato = Nodo.getData();
 	for (int i = 0; i < this->nodes_cant; ++i)
@@ -22,18 +22,21 @@ void adyacente<T>::addNodo(node<T> newNodo)
 {
     if (this->nodes_cont < this->nodes_cant)
     {
-        // set 0 localitation node in ady matrix.
-        this->matrix_ADY[this->nodes_cont][this->nodes_cont] = 0;
-        // Guardo en el obj su ubicacion en la matriz adyacente.
-        newNodo.setLocation(make_tuple(this->nodes_cont,this->nodes_cont));
+        this->matrix_ADY[this->nodes_cont][this->nodes_cont] = 0; 
+        newNodo.setLocation(make_tuple(this->nodes_cont, this->nodes_cont));
         int aux1, aux2;
 
-        const vector<edge<T>>& edges = newNodo.getEdges();  // Acceso a edges
+        const vector<edge<T>>& edges = newNodo.getEdges();
 
         for (int i = 0; i < edges.size(); ++i)
         {
             aux1 = get<0>(edges[i].destination) - 1;
             aux2 = get<1>(edges[i].destination) - 1;
+
+            if (aux1 < 0 || aux1 >= this->nodes_cant || aux2 < 0 || aux2 >= this->nodes_cant)
+            {
+                throw invalid_argument("ERROR: Arco erroneo. Índices fuera de rango.");
+            }
 
             this->matrix_ADY[aux1][aux2] = 1;
             this->matrix_ADY[aux2][aux1] = 1;
@@ -41,4 +44,9 @@ void adyacente<T>::addNodo(node<T> newNodo)
 
         (this->nodes_cont++);
     }
+    else
+    {
+        throw overflow_error("ERROR: No se pueden agregar más nodos. Capacidad alcanzada.");
+    }
 }
+

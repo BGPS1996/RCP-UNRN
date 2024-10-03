@@ -1,9 +1,6 @@
 #include <iostream>
 #include <tuple>
 
-//#include "node.h"
-//#include "node.cpp"
-
 #include "matrix_Ady.h"
 #include "matrix_Ady.cpp"
 
@@ -12,6 +9,7 @@ int main(int argc, char const *argv[])
 {
 	adyacente<int> matrix(5);
 
+	//https://jonathanhigueravelasquez.wordpress.com/representacion-de-los-grafos/
 	node<int> a("A", 1, make_tuple(0, 0));
 	a.addEdge(make_tuple(1, 2), 5);  // Arco de A a B con peso 5
 	a.addEdge(make_tuple(1, 4), 10); // Arco de A a C con peso 10

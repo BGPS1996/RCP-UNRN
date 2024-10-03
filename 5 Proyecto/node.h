@@ -33,7 +33,7 @@ public:
     
     tuple<unsigned long, unsigned long> getLocation() const { return location; }
     T getData() const { return data; }
-    
+    string getName() const { return name; }
     int getCantedge() const { return edges.size(); }
     const vector<edge<T>>& getEdges() const { return edges; }
     
@@ -51,6 +51,33 @@ public:
         os << "]";
         
         return os;
+    }
+
+    friend istream& operator>>(istream& is, node<T>& n) {
+        cout << "Enter node name: ";
+        is >> n.name;
+
+        cout << "Enter node data: ";
+        is >> n.data;
+
+        unsigned long x, y;
+        cout << "Enter node location (x y): ";
+        is >> x >> y;
+        n.location = make_tuple(x, y);
+
+        int numEdges;
+        cout << "Enter number of edges: ";
+        is >> numEdges;
+
+        for (int i = 0; i < numEdges; ++i) {
+            int destX, destY;
+            T weight;
+            cout << "Enter edge destination (x y) and weight: ";
+            is >> destX >> destY >> weight;
+
+            n.addEdge(make_tuple(destX, destY), weight);
+        }
+        return is;
     }
 
     node<T>& operator=(const node<T>& other) {

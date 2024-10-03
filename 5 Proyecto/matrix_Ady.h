@@ -9,6 +9,8 @@
 #include "node.h"
 #include "node.cpp"
 
+#include "modes.h"
+
 template<class T>
 class adyacente
 {
@@ -16,6 +18,7 @@ private:
 	int nodes_cant;
 	int nodes_cont;
 	matrix<T> matrix_ADY;
+
 public:
 	adyacente(int nodes): matrix_ADY(nodes, nodes), nodes_cant(nodes), nodes_cont(0) { }
 	~adyacente() { }
@@ -28,8 +31,7 @@ public:
 		matrix_ADY.showMatrix(); }
 
 	bool existeNodo(node<T>);
-	void addNodo(node<T>);
-	
+	void addNodo(node<T>, MODE);
 };
 
 /************************************** ERRORES *******************************************/

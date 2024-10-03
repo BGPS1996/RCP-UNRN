@@ -5,11 +5,11 @@
 #include "..\3 Proyecto\Inciso 2\C3-matrix.h"
 #include "..\3 Proyecto\Inciso 2\C3-matrix.cpp"
 
-#include "nodes.h"
-#include "nodes.cpp"
+#include "node.h"
+#include "node.cpp"
 
 template<class T>
-class adyacente: public matrix
+class adyacente
 {
 private:
 	int nodes_cant;
@@ -19,13 +19,15 @@ public:
 	adyacente(int nodes): matrix_ADY(nodes, nodes), nodes_cant(nodes), nodes_cont(0) { }
 	~adyacente() { }
 
-	int getRows() const { return matrix::getRows(); }
-	int getCols() const { return matrix::getCols(); }
+	int getRows() const { return matrix_ADY.getRows(); }
+	int getCols() const { return matrix_ADY.getCols(); }
 
-	void showMatrix() { matrix::showMatrix(); }
+	void showMatrix() { 
+		cout<< "MATRIZ ADYACENTE:" << endl;
+		matrix_ADY.showMatrix(); }
 
-	bool existeNodo();
-	void addNodo(nodes<T>);
+	bool existeNodo(node<T>);
+	void addNodo(node<T>);
 	
 };
 

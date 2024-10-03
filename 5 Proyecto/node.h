@@ -24,17 +24,20 @@ private:
     string name;
     T data;
     tuple<unsigned long, unsigned long> location;
-    int cant_edge;
     vector<edge<T>> edges;
 
 public:
-    node(): name("NN"), data(T(0)), location(0, 0), cant_edge(0) { }
-    node(string name, T data, tuple<unsigned long, unsigned long> loc): name(name), data(data), location(loc), cant_edge = 0 { }
+    node(): name("NN"), data(T(0)), location(0, 0) { }
+    node(string name, T data, tuple<unsigned long, unsigned long> loc): name(name), data(data), location(loc) { }
     ~node();
+    
     tuple<unsigned long, unsigned long> getLocation() const { return location; }
     T getData() const { return data; }
-    int getCantedge() const { return cant_edge;}
-    void addEdge(string, T);
+    
+    int getCantedge() const { return edges.size(); }
+    const vector<edge<T>>& getEdges() const { return edges; }
+    
+    void addEdge(tuple<int, int> dest, T weight);
     void setLocation(tuple<unsigned long, unsigned long>);
 
     friend ostream& operator<<(ostream& os, const node<T>& n) {
@@ -50,26 +53,22 @@ public:
         return os;
     }
 
-    
     node<T>& operator=(const node<T>& other) {
         if (this != &other) {
             this->name = other.name;
             this->data = other.data;
             this->location = other.location;
             this->edges = other.edges;
-            this->cant_edge = other.cant_edge;
         }
         return *this;
     }
 
-    
     bool operator==(const node<T>& other) const {
         return (this->name == other.name && 
                 this->data == other.data && 
                 this->location == other.location && 
-                this->edges == other.edges);  // Comparación de aristas
+                this->edges == other.edges);
     }
-
 };
 
 #endif

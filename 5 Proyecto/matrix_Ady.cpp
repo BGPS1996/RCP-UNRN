@@ -1,7 +1,7 @@
-#include "matrix_Ady.h"
+#include "matrix_ADY.h"
 
 template<class T>
-bool adyacente<T>::existeNodo(nodes<T> Nodo)
+bool adyacente<T>::existeNodo(node<T> Nodo)
 {
 	if(nodes_cont == 0)	// si esta vacio
 		return false;
@@ -10,7 +10,7 @@ bool adyacente<T>::existeNodo(nodes<T> Nodo)
 	{
 		for (int j = 0; j < this->nodes_cant; ++j)
 		{
-			if(this->matrix_Ady[i][j] == dato)
+			if(this->matrix_ADY[i][j] == dato)
 				return true;
 		}
 	}
@@ -18,17 +18,27 @@ bool adyacente<T>::existeNodo(nodes<T> Nodo)
 }
 
 template<class T>
-void adyacente<T>::addNodo(nodes<T> newNodo)
+void adyacente<T>::addNodo(node<T> newNodo)
 {
-	if(this->nodes_cont < this->nodes_cant)
-	{
-		this->matrix_Ady[this->nodes_cont][this->nodes_cont] = 0; 
-		for (int i = 0; i < newNodo.cant_edge; ++i)
-		{
-			get<0>(newNodo->edges[i].destination)
-			get<1>(newNodo->edges[i].destination)
-		}
-		
-		(this->nodes_cont++);
-	}
+    if (this->nodes_cont < this->nodes_cant)
+    {
+        // set 0 localitation node in ady matrix.
+        this->matrix_ADY[this->nodes_cont][this->nodes_cont] = 0;
+        // Guardo en el obj su ubicacion en la matriz adyacente.
+        newNodo.setLocation(make_tuple(this->nodes_cont,this->nodes_cont));
+        int aux1, aux2;
+
+        const vector<edge<T>>& edges = newNodo.getEdges();  // Acceso a edges
+
+        for (int i = 0; i < edges.size(); ++i)
+        {
+            aux1 = get<0>(edges[i].destination) - 1;
+            aux2 = get<1>(edges[i].destination) - 1;
+
+            this->matrix_ADY[aux1][aux2] = 1;
+            this->matrix_ADY[aux2][aux1] = 1;
+        }
+
+        (this->nodes_cont++);
+    }
 }

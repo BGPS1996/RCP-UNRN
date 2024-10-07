@@ -159,8 +159,6 @@ void grafo<T>::DFSUtil(int node, vector<bool>& visited)
     }
 }
 
-
-
 template<class T>
 void grafo<T>::DFS(int startNode) {
     vector<bool> visited(this->vertices, false);
@@ -172,35 +170,34 @@ void grafo<T>::DFS(int startNode) {
 
 template<class T>
 void grafo<T>::floydWarshall(vector<vector<T>>& dist, vector<vector<int>>& next) {
-        int n = this->vertices;
+    int n = this->vertices;
         
-        dist.resize(n, vector<T>(n, numeric_limits<T>::max()));
-        next.resize(n, vector<int>(n, -1));
-
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (i == j) {
-                    dist[i][j] = 0;
-                } else if (this->matrix_ADY[i][j] != numeric_limits<T>::max()) {
-                    dist[i][j] = this->matrix_ADY[i][j];
-                    next[i][j] = j;
-                }
+    dist.resize(n, vector<T>(n, numeric_limits<T>::max()));
+    next.resize(n, vector<int>(n, -1));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i == j) {
+                dist[i][j] = 0;
+            } else if (this->matrix_ADY[i][j] != numeric_limits<T>::max()) {
+                dist[i][j] = this->matrix_ADY[i][j];
+                next[i][j] = j;
             }
         }
+    }
 
-        for (int k = 0; k < n; ++k) {
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < n; ++j) {
-                    if (dist[i][k] != numeric_limits<T>::max() &&
-                        dist[k][j] != numeric_limits<T>::max() &&
-                        dist[i][k] + dist[k][j] < dist[i][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
-                        next[i][j] = next[i][k];
-                    }
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (dist[i][k] != numeric_limits<T>::max() &&
+                    dist[k][j] != numeric_limits<T>::max() &&
+                    dist[i][k] + dist[k][j] < dist[i][j]) {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                    next[i][j] = next[i][k];
                 }
             }
         }
     }
+}
 
 template<class T>
 vector<int> grafo<T>::getPath(int u, int v, const vector<vector<int>>& next) {

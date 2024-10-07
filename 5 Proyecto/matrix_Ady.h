@@ -32,6 +32,11 @@ public:
 
 	bool existeNodo(node<T>);
 	void addNodo(node<T>, MODE);
+
+
+	vector<T>& operator[](int index) {
+        return matrix_ADY[index];
+    }
 };
 
 /************************************** ERRORES *******************************************/

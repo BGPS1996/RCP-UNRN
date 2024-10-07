@@ -14,6 +14,7 @@ public:
     tuple<int, int> destination;  
     T weight;
     edge(tuple<int, int> dest, T w) : destination(dest), weight(w) { }
+    T getWeight() const { return weight;}
 };
 
 

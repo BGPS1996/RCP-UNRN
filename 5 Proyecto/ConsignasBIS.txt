@@ -1,0 +1,6 @@
+Esta tarea es una extensión de la realizada para el Proyecto 5 y busca implementar el algoritmo de Floyd 
+para calcular camino mínimo entre todo par de nodos. 
+Nota: observen que para retornarlos pueden utilizar la misma matriz que ustedes implementaron instanciándola 
+en el tipo de datos que necesiten para poder retornar lo pedido. Además de retornar el costo de los caminos 
+mínimos quisiéramos poder calcular a partir de la matriz el camino. Ver en las diapositivas cómo lo hace el 
+algoritmo de Dijkstra a partir almacenar, para cada nodo, el nodo precedente en el camino

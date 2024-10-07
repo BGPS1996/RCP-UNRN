@@ -25,7 +25,7 @@ public:
 
 	int getRows() const { return matrix_ADY.getRows(); }
 	int getCols() const { return matrix_ADY.getCols(); }
-
+	T getValue(int row, int col) const { return this->matrix_ADY[row][col]; }
 	void showMatrix() { 
 		cout<< "MATRIZ ADYACENTE:" << endl;
 		matrix_ADY.showMatrix(); }

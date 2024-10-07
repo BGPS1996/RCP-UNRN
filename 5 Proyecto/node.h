@@ -12,7 +12,7 @@ class edge
 {
 public:
     tuple<int, int> destination;  
-    T weight;            
+    T weight;
     edge(tuple<int, int> dest, T w) : destination(dest), weight(w) { }
 };
 

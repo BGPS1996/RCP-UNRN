@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#include <queue>  // Para BFS
+#include <stack>  // Para DFS
+
 #include "matrix_Ady.h"
 #include "matrix_Ady.cpp"
 
@@ -25,23 +28,38 @@ public:
 	grafo(int);
 	~grafo();
 
-	void setVertices(int v) : vertices(v) { }
-	void setMode(MODE op) : currentMode(op) { }
+	void setVertices(int v) {vertices = v; }
+	void setMode(MODE op) 	{currentMode = op; }
 
 	int getVertices() const { return matrix_ADY.getRows(); }
 	MODE getMode() const { return currentMode; }
+	vector<int> getVecindario(int node);
 
+	bool esConexo();
 	void showRepresentation();
+
+	void BFS(int startNode);
+	void DFS(int startNode);
+	void DFSUtil(int node, vector<bool>& visited);  // Función auxiliar para DFS
+
+
+    vector<int> getEjesSalientes(int node);  // Ejes salientes de un nodo
+    vector<int> getEjesEntrantes(int node);  // Ejes entrantes de un nodo
+
+    
+
 	
 };
 
 #endif
 
 /*
+
 La idea es hacer ahora un template para la matriz incidencia,
 luego hacer para cuando el grafo esta en modo dirigido.
 
 luego implementar BFS y DFS.
 
 Para tener la posibilidad de usar el template en cualquier circustancia
+
 */

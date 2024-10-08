@@ -10,12 +10,10 @@
 using namespace std;
 int main(int argc, char const *argv[])
 {
-	grafo<int> preba(3);
+	grafo<int> preba(2);
 	preba.showRepresentation();
 	cout<<" BFS" <<endl;
-	cout<<" BFS" <<endl;
 	preba.BFS(0);
-	cout<<"DFS " <<endl;
 	cout<<"DFS " <<endl;
 	preba.DFS(0);
 

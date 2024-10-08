@@ -147,10 +147,9 @@ void grafo<T>::BFS(int startNode) {
 
 
 template<class T>
-void grafo<T>::DFSUtil(int node, vector<bool>& visited)
-{
+void grafo<T>::DFSUtil(int node, vector<bool>& visited) {
     visited[node] = true; 
-    cout << node << " ";
+    cout << "Visited: " << this->matrix_ADY.getNodes()[node].getName() << " ";  // Imprime el nombre del nodo
 
     for (int i = 0; i < this->vertices; ++i) {
         if (this->matrix_ADY.getValue(node, i) == 1 && !visited[i]) { 
@@ -163,10 +162,11 @@ template<class T>
 void grafo<T>::DFS(int startNode) {
     vector<bool> visited(this->vertices, false);
 
-    cout << "DFS traversal starting from node " << startNode << ": ";
+    cout << "DFS traversal starting from node " << this->matrix_ADY.getNodes()[startNode].getName() << ": ";  // Imprime el nombre del nodo inicial
     DFSUtil(startNode, visited);
     cout << endl;
 }
+
 
 template<class T>
 void grafo<T>::floydWarshall(vector<vector<T>>& dist, vector<vector<int>>& next) {

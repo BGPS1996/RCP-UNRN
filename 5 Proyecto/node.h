@@ -4,10 +4,7 @@
 /**
  * @file nodo.h 
  * @autor BGPS
- * @brief Este archivo desarrolla la implementacion de los nodos y de los arcos.
- * 
- * Desarrolla la clase arcos y clase nodos. En la clase nodo podemos observar que contiene como atributo privado una lista de arcos.
- * 
+ * @brief Este archivo desarrolla la implementacion de los `nodos` y de los `arcos`.
 */
 
 
@@ -58,18 +55,21 @@ private:
     vector<edge<T>> edges;                          ///< Los arcos que conectar al nodo. 
 
 public:
+    
     /**
      * @brief Constructores con sus variantes.
      * La funcion por defecto le asigna al nodo nombre "NN", y locacion en la matriz en (0, 0).
     */ 
     node(): name("NN"), data(T(0)), location(0, 0) { }
+    
     /**
      * @brief Constructor con entradas.
-     * @param [in] name Asignacion de nombre al nodo
-     * @param [in] data  Dato representativo.
-     * @param [in] loc Representa la ubicacion en la matriz adyacente.
+     * @param[in] name Asignacion de nombre al nodo
+     * @param[in] data  Dato representativo.
+     * @param[in] loc Representa la ubicacion en la matriz adyacente.
     */
     node(string name, T data, tuple<unsigned long, unsigned long> loc): name(name), data(data), location(loc) { }
+    
     ~node();
 
     /**
@@ -77,39 +77,44 @@ public:
      * Por defecto se encuentra ubicaco en la posicion (0, 0).
      * @return Devuelve la ubicion en la matriz de adyacencia. 
     */
-    
     tuple<unsigned long, unsigned long> getLocation() const { return location; }
+    
     /**
      * @brief Getter dato
      * Devuelve el valor que se guardo en el nodo.
      * @return Retorna el valor del nodo.
     */
     T getData() const { return data; }
+    
     /**
      * @brief Getter Nombre
      * Por defecto el nombre del nodo es "NN".
      * @return Retorna el nombre del nodo.
     */
     string getName() const { return name; }
+    
     /**
      * @brief Getter cantidad de arcos que enlazan al Nodo.
      * @return Retorna un entero. 
     */
     int getCantedge() const { return edges.size(); }
+    
     /**
      * @brief Getter de Lista de arcos.
      * Devuelve la lista de los arcos conectado al Nodo.
     */
     const vector<edge<T>>& getEdges() const { return edges; }
+    
     /**
      * @brief Añadir arco al Nodo
-     * @param [in] dest Tupla que representa la coneccion < Nodo origen, Nodo Destino> .
-     * @param [in] weigth Peso o costo asignado a dicho arco.
+     * @param[in] dest Tupla que representa la coneccion < Nodo origen, Nodo Destino> .
+     * @param[in] weigth Peso o costo asignado a dicho arco.
     */
     void addEdge(tuple<int, int> dest, T weight);
+    
     /**
      * @brief Setter ubicacion en la funcion adyacente.
-     * @param [in] loc Redefine la locacion del Nodo.
+     * @param[in] loc Redefine la locacion del Nodo.
     */
     void setLocation(tuple<unsigned long, unsigned long> loc);
 

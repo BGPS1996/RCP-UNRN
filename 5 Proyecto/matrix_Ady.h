@@ -1,5 +1,6 @@
 #ifndef MATRIX_ADY_H
 #define MATRIX_ADY_H
+
 /**
  * @file matrix_Ady.h 
  * @autor BGPS
@@ -20,19 +21,20 @@
  * @tparam T Tipo de dato.
  * 
 */
-
 template<class T>
 class adyacente
 {
 private:
 	int nodes_cant;											///< Cantidad de Nodos en la matriz.
 	int nodes_cont;											///< Cantidad de Nodos cargados.
+	vector<node<T>> nodes;									///< Lista de Nodos.
 	matrix<T> matrix_ADY;									///< Matriz adyacente.
 
 public:
+
 	/**
 	 * @brief Constructor de la clase
-	 * @param [int] nodes Cantidad de nodos de la matriz.
+	 * @param[in] nodes Cantidad de nodos de la matriz.
 	 * 
 	 * Por defectos se setea nodes_cont igual a cero, y nodes_cant igual a nodes (input).
 	*/
@@ -46,20 +48,30 @@ public:
 	*/
 
 	int getRows() const { return matrix_ADY.getRows(); }
+
 	/**
 	 * @brief Getter Cols
 	 * Usa el metodo de clase Matrix para obtener la cantidad de columnas.
 	 * @return constante.
 	*/
 	int getCols() const { return matrix_ADY.getCols(); }
+
 	/**
 	 * @brief Getter dato en matriz (i, j).
 	 * Usa la sobrecarga del operador de la clase Matrix para obtener el valor.
-	 * @param [in] row fila seleccionada de la matriz.
-	 * @param [in] col columna seleccionada de la matriz.
+	 * @param[in] row fila seleccionada de la matriz.
+	 * @param[in] col columna seleccionada de la matriz.
 	 * @return tipo da T.
 	*/
 	T getValue(int row, int col) const { return this->matrix_ADY[row][col]; }
+
+	/**
+	 * @brief Getter para acceder a la lista de nodos en el grafo.
+	 * @return Referencia a un vector de nodos.
+	 */
+	vector<node<T>>& getNodes() { return nodes; }
+
+
 	/**
 	 * @brief Mostrar
 	 * Usa el metodo de clase Matrix para obtener la cantidad de filas.
@@ -67,19 +79,22 @@ public:
 	void showMatrix() { 
 		cout<< "MATRIZ ADYACENTE:" << endl;
 		matrix_ADY.showMatrix(); }
+
 	/**
 	 * @brief Funcion que retoral verdadero o falso si el nodo se encuentra cargado en la matriz. 
-	 * @tparam T 
-	 * @param [in] node<T> Nodo que se busca en la matriz adyacente.
+	 * 
+	 * @param[in] nodo Nodo que se busca en la matriz adyacente.
 	*/
-	bool existeNodo(node<T>);
+	bool existeNodo(node<T> nodo);
+
 	/**
 	 * @brief Añadir Nodo
 	 * Añade el nodo a la matriz adyacente, si nodo_cont es diferente a nodo_cant.
-	 * @param [in] nodo<T> Nodo para añadir en la matriz.
-	 * @param [in] MODE Modo que se inserta el nodo, Direccional o Bidireccional.
+	 * @param[in] nodo Nodo para añadir en la matriz.
+	 * @param[in] op Modo que se inserta el nodo, Direccional o Bidireccional.
 	*/
-	void addNodo(node<T>, MODE);
+	void addNodo(node<T> nodo, MODE op);
+
 
 	/**
 	 * @brief Sobrecarga de operador[]

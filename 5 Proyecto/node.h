@@ -16,43 +16,44 @@ using namespace std;
 
 /**
  @brief Clase que representa un arco en un grafo.
- * @tparam T Tipo de dato.
+ * @tparam U Tipo de dato.
  * 
 */
-template<class T>
+template<class U>
 class edge
 {
 public:
     tuple<int, int> destination;                    ///< Tupla representando < Origen Nodo, Destino Nodo>
-    T weight;                                       ///< Peso o costo del Arco.
+    U weight;                                       ///< Peso o costo del Arco.
     /**
     @brief Constructor por defecto.
     *
     * @param[in] dest Tupla de enteros para representar la posicion.
     * @param[in] w Costo o Peso del arco.
     */ 
-    edge(tuple<int, int> dest, T w) : destination(dest), weight(w) { }
+    edge(tuple<int, int> dest, U w) : destination(dest), weight(w) { }
 
     /**
      * @brief Getter del peso o costo del arco.
      * @return El peso o Costo.
     */ 
-    T getWeight() const { return weight;}
+    U getWeight() const { return weight;}
 };
 
 /**
- * @brief Esta clase representa al nodo de un grafo
- * 
+ * @brief Esta clase representa al nodo de un grafo.
+ * @tparam T Tipo de dato para el contenido del nodo.
+ * @tparam U Tipo de dato para el peso de los arcos.
  */
 
-template<class T>
+template<class T, class U>
 class node
 {
 private:
     string name;                                    ///< Nombre, es opcional.
     T data;                                         ///< Dato representativo.
     tuple<unsigned long, unsigned long> location;   ///< Representa la tupla. (Posicion i, Posicion j)
-    vector<edge<T>> edges;                          ///< Los arcos que conectar al nodo. 
+    vector<edge<U>> edges;                          ///< Los arcos que conectar al nodo. 
 
 public:
     
@@ -103,14 +104,14 @@ public:
      * @brief Getter de Lista de arcos.
      * Devuelve la lista de los arcos conectado al Nodo.
     */
-    const vector<edge<T>>& getEdges() const { return edges; }
+    const vector<edge<U>>& getEdges() const { return edges; }
     
     /**
      * @brief Añadir arco al Nodo
      * @param[in] dest Tupla que representa la coneccion < Nodo origen, Nodo Destino> .
      * @param[in] weigth Peso o costo asignado a dicho arco.
     */
-    void addEdge(tuple<int, int> dest, T weight);
+    void addEdge(tuple<int, int> dest, U weight);
     
     /**
      * @brief Setter ubicacion en la funcion adyacente.
@@ -118,21 +119,20 @@ public:
     */
     void setLocation(tuple<unsigned long, unsigned long> loc);
 
-
-    friend ostream& operator<<(ostream& os, const node<T>& n) {
+    friend ostream& operator<<(ostream& os, const node<T, U>& n) {
         os << "Node Name: " << n.name << ", Data: " << n.data 
            << ", Location: (" << get<0>(n.location) << ", " << get<1>(n.location) << ")";
-        
+
         os << ", Edges: [";
         for (const auto& e : n.edges) {
             os << " {Dest: (" << get<0>(e.destination) << ", " << get<1>(e.destination) << "), Weight: " << e.weight << "} ";
         }
         os << "]";
-        
+
         return os;
     }
 
-    friend istream& operator>>(istream& is, node<T>& n) {
+    friend istream& operator>>(istream& is, node<T, U>& n) {
         cout << "Enter node name: ";
         is >> n.name;
 
@@ -150,16 +150,17 @@ public:
 
         for (int i = 0; i < numEdges; ++i) {
             int destX, destY;
-            T weight;
+            U weight;
             cout << "Enter edge destination (x y) and weight: ";
             is >> destX >> destY >> weight;
 
             n.addEdge(make_tuple(destX, destY), weight);
         }
+
         return is;
     }
 
-    node<T>& operator=(const node<T>& other) {
+    node<T, U>& operator=(const node<T, U>& other) {
         if (this != &other) {
             this->name = other.name;
             this->data = other.data;
@@ -169,7 +170,7 @@ public:
         return *this;
     }
 
-    bool operator==(const node<T>& other) const {
+    bool operator==(const node<T, U>& other) const {
         return (this->name == other.name && 
                 this->data == other.data && 
                 this->location == other.location && 

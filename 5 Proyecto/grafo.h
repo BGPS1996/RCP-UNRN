@@ -20,7 +20,7 @@
  * @brief La clase Grafo tiene dos modos: dirigido y no dirigido. Esto afecta la forma en que se representa la matriz de adyacencia.
  * @tparam T Tipo de dato asociado a los arcos del grafo.
  */
-template<class T>
+template<class T, class U>
 class grafo
 {
 private:
@@ -28,6 +28,12 @@ private:
 	int aristas;        		///< Cantidad de arcos en el grafo.
 	MODE currentMode;   		///< Configuración del grafo: dirigido o no dirigido.
 	adyacente<T> matrix_ADY;  	///< Matriz de adyacencia que representa el grafo.
+	/**
+	 * @brief Función auxiliar para realizar DFS recursivo.
+	 * @param[in] node Nodo actual en el recorrido DFS.
+	 * @param[in] visited Vector que indica si un nodo ha sido visitado.
+	 */
+	void DFSUtil(int node, vector<bool>& visited);
 
 public:
 	/**
@@ -110,13 +116,6 @@ public:
 	void DFS(int startNode);
 
 	/**
-	 * @brief Función auxiliar para realizar DFS recursivo.
-	 * @param[in] node Nodo actual en el recorrido DFS.
-	 * @param[in] visited Vector que indica si un nodo ha sido visitado.
-	 */
-	void DFSUtil(int node, vector<bool>& visited);
-
-	/**
 	 * @brief Obtiene los ejes salientes de un nodo dado.
 	 * @param[in] node Índice del nodo seleccionado.
 	 * @return Vector de índices de nodos a los que el nodo dado está conectado.
@@ -141,7 +140,7 @@ public:
 	 * @param[out] next Matriz que será llenada con los nodos precedentes para cada par de nodos, lo que permite reconstruir el camino mínimo.
 	 * En caso de que no exista un camino entre dos nodos, el valor correspondiente en `next` debe ser -1.
 	*/
-	void floydWarshall(vector<vector<T>>& dist, vector<vector<int>>& next);
+	void floydWarshall(vector<vector<U>>& dist, vector<vector<int>>& next);
 
 	/**
 	 * @brief Reconstruye el camino mínimo entre dos nodos dado el resultado del algoritmo de Floyd-Warshall.

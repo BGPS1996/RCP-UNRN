@@ -1,19 +1,19 @@
 #include "node.h"
 
-template<class T>
-node<T>::~node()
+template<class T, class U>
+node<T, U>::~node()
 {
     
 }
 
-template<class T>
-void node<T>::setLocation(tuple<unsigned long, unsigned long> _location)
+template<class T, class U>
+void node<T, U>::setLocation(tuple<unsigned long, unsigned long> _location)
 {
     this->location = _location;
 }
 
-template<class T>
-void node<T>::addEdge(tuple<int, int> dest, T weight)
+template<class T, class U>
+void node<T, U>::addEdge(tuple<int, int> dest, U weight)
 {
-    edges.push_back(edge<T>(dest, weight));
+    edges.push_back(edge<T, U>(dest, weight));
 }

@@ -19,7 +19,7 @@ using namespace std;
  * @tparam U Tipo de dato.
  * 
 */
-template<class U>
+template<class T, class U>
 class edge
 {
 public:
@@ -38,6 +38,8 @@ public:
      * @return El peso o Costo.
     */ 
     U getWeight() const { return weight;}
+
+    const tuple<int, int> & getDestination() const { return destination; }
 };
 
 /**
@@ -53,7 +55,7 @@ private:
     string name;                                    ///< Nombre, es opcional.
     T data;                                         ///< Dato representativo.
     tuple<unsigned long, unsigned long> location;   ///< Representa la tupla. (Posicion i, Posicion j)
-    vector<edge<U>> edges;                          ///< Los arcos que conectar al nodo. 
+    vector<edge<T, U>> edges;                          ///< Los arcos que conectar al nodo. 
 
 public:
     
@@ -104,7 +106,7 @@ public:
      * @brief Getter de Lista de arcos.
      * Devuelve la lista de los arcos conectado al Nodo.
     */
-    const vector<edge<U>>& getEdges() const { return edges; }
+    const vector<edge<T, U>>& getEdges() const { return edges; }
     
     /**
      * @brief Añadir arco al Nodo
@@ -139,10 +141,11 @@ public:
         cout << "Enter node data: ";
         is >> n.data;
 
-        unsigned long x, y;
-        cout << "Enter node location (x y): ";
-        is >> x >> y;
-        n.location = make_tuple(x, y);
+        //unsigned long x, y;
+        //cout << "Enter node location (x y): ";
+        //is >> x >> y;
+
+        n.location = make_tuple(0, 0);
 
         int numEdges;
         cout << "Enter number of edges: ";

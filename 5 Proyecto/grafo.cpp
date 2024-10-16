@@ -165,3 +165,56 @@ vector<int> grafo<T, U>::getPath(int u, int v, const vector<vector<int>>& next) 
     }
     return path;
 }
+
+template<class T, class U>
+void grafo<T, U>::showGrafo() {
+    vector<node<T, U>>& nodes = matrix_ADY.getNodes();
+    cout << endl;
+    cout << "Representacion del grafo con flechas:" << endl;
+
+    int cont = 0;
+    for (int i = 0; i < vertices; ++i) {
+        cout << nodes[i].getName() << " (" << nodes[i].getData() <<")" ;
+        cout << "---> ";
+
+        const vector<edge<T, U>>& edges = nodes[i].getEdges();
+        bool tieneVecinos = false;
+
+        for (int j = cont; j < edges.size(); ++j) {
+            cont++;
+            const tuple<int, int>& destination = edges[j].getDestination();
+            int destino = get<1>(destination) - 1 ;
+
+            if (destino >= 0 && destino < vertices) {
+                T valor = nodes[destino].getData();
+                
+                if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
+                    tieneVecinos = true;
+                    cout << nodes[destino].getName() << "(" << valor << ") ";
+                }
+            }
+        }
+        if (!tieneVecinos) {
+            cout << "sin vecinos";
+        }
+        cout << endl; 
+    }
+}
+
+
+template <class T, class U>
+void grafo<T, U>::showRepresentation()
+{
+    switch(this->currentMode)
+    {
+        case mode_DIRIGIDO:
+            cout<< "MODO: DIRIGIDO: "<< endl;
+            this->matrix_ADY.showMatrix();
+            break;
+
+        case mode_NO_DIRIGIDO:
+            cout<< "MODO: NO DIRIGIDO: "<< endl;
+            this->matrix_ADY.showMatrix();
+            break;
+    }
+}

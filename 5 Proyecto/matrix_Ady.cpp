@@ -1,7 +1,7 @@
 #include "matrix_ADY.h"
 
-template<class T>
-bool adyacente<T>::existeNodo(node<T> Nodo)
+template<class T, class U>
+bool adyacente<T, U>::existeNodo(node<T, U> Nodo)
 {
 	if(nodes_cont == 0)
 		return false;
@@ -17,8 +17,8 @@ bool adyacente<T>::existeNodo(node<T> Nodo)
 	return false;
 }
 
-template<class T>
-void adyacente<T>::addNodo(node<T> newNodo, MODE _mode)
+template<class T, class U>
+void adyacente<T, U>::addNodo(node<T, U> newNodo, MODE _mode)
 {
     switch(_mode)
     {
@@ -29,7 +29,7 @@ void adyacente<T>::addNodo(node<T> newNodo, MODE _mode)
                 newNodo.setLocation(make_tuple(this->nodes_cont, this->nodes_cont));
                 int aux1, aux2;
 
-                const vector<edge<T>>& edges = newNodo.getEdges();
+                const vector<edge<T, U>>& edges = newNodo.getEdges();
 
                 for (int i = 0; i < edges.size(); ++i)
                 {
@@ -42,6 +42,9 @@ void adyacente<T>::addNodo(node<T> newNodo, MODE _mode)
                     }
                     this->matrix_ADY[aux1][aux2] = 1;
                 }
+
+                
+                this->nodes.push_back(newNodo);
 
                 (this->nodes_cont++);
             }
@@ -58,7 +61,7 @@ void adyacente<T>::addNodo(node<T> newNodo, MODE _mode)
                 newNodo.setLocation(make_tuple(this->nodes_cont, this->nodes_cont));
                 int aux1, aux2;
 
-                const vector<edge<T>>& edges = newNodo.getEdges();
+                const vector<edge<T, U>>& edges = newNodo.getEdges();
 
                 for (int i = 0; i < edges.size(); ++i)
                 {
@@ -73,6 +76,8 @@ void adyacente<T>::addNodo(node<T> newNodo, MODE _mode)
                     this->matrix_ADY[aux1][aux2] = 1;
                     this->matrix_ADY[aux2][aux1] = 1;
                 }
+
+                this->nodes.push_back(newNodo);
 
                 (this->nodes_cont++);
             }

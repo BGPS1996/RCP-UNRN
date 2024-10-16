@@ -19,15 +19,15 @@
  * @class grafo
  * @brief La clase Grafo tiene dos modos: dirigido y no dirigido. Esto afecta la forma en que se representa la matriz de adyacencia.
  * @tparam T Tipo de dato asociado a los arcos del grafo.
- */
+ */ 
 template<class T, class U>
 class grafo
 {
 private:
-	int vertices;       		///< Cantidad de nodos cargados en el grafo.
-	int aristas;        		///< Cantidad de arcos en el grafo.
-	MODE currentMode;   		///< Configuración del grafo: dirigido o no dirigido.
-	adyacente<T> matrix_ADY;  	///< Matriz de adyacencia que representa el grafo.
+	int vertices;       			///< Cantidad de nodos cargados en el grafo.
+	int aristas;        			///< Cantidad de arcos en el grafo.
+	MODE currentMode;   			///< Configuración del grafo: dirigido o no dirigido.
+	adyacente<T, U> matrix_ADY;  	///< Matriz de adyacencia que representa el grafo.
 	/**
 	 * @brief Función auxiliar para realizar DFS recursivo.
 	 * @param[in] node Nodo actual en el recorrido DFS.
@@ -93,6 +93,12 @@ public:
 	vector<int> getVecindario(int node);
 
 	/**
+	 * @brief Devuelve la matriz de adyasencia.
+	 * @return Matriz de Adyasencia.
+	 */
+	adyacente<T, U>& getMatrix() {return matrix_ADY; }
+	
+	/**
 	 * @brief Verifica si el grafo es conexo.
 	 * @return true si el grafo es conexo, false en caso contrario.
 	 */
@@ -154,5 +160,7 @@ public:
 	 * @return Un vector de enteros que representa el camino mínimo desde el nodo `u` hasta el nodo `v`. Si no hay camino, se devuelve un vector vacío.
 	 */
 	vector<int> getPath(int u, int v, const vector<vector<int>>& next);
+
+	void showGrafo();
 };
 #endif

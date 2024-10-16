@@ -21,13 +21,13 @@
  * @tparam T Tipo de dato.
  * 
 */
-template<class T>
+template<class T, class U>
 class adyacente
 {
 private:
 	int nodes_cant;											///< Cantidad de Nodos en la matriz.
 	int nodes_cont;											///< Cantidad de Nodos cargados.
-	vector<node<T>> nodes;									///< Lista de Nodos.
+	vector<node<T, U>> nodes;									///< Lista de Nodos.
 	matrix<T> matrix_ADY;									///< Matriz adyacente.
 
 public:
@@ -69,7 +69,7 @@ public:
 	 * @brief Getter para acceder a la lista de nodos en el grafo.
 	 * @return Referencia a un vector de nodos.
 	 */
-	vector<node<T>>& getNodes() { return nodes; }
+	vector<node<T, U>>& getNodes() { return nodes; }
 
 
 	/**
@@ -85,7 +85,7 @@ public:
 	 * 
 	 * @param[in] nodo Nodo que se busca en la matriz adyacente.
 	*/
-	bool existeNodo(node<T> nodo);
+	bool existeNodo(node<T, U> nodo);
 
 	/**
 	 * @brief Añadir Nodo
@@ -93,7 +93,7 @@ public:
 	 * @param[in] nodo Nodo para añadir en la matriz.
 	 * @param[in] op Modo que se inserta el nodo, Direccional o Bidireccional.
 	*/
-	void addNodo(node<T> nodo, MODE op);
+	void addNodo(node<T, U> nodo, MODE op);
 
 
 	/**

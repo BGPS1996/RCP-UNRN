@@ -13,7 +13,7 @@ void node<T, U>::setLocation(tuple<unsigned long, unsigned long> _location)
 }
 
 template<class T, class U>
-void node<T, U>::addEdge(tuple<int, int> dest, U weight)
+void node<T, U>::addEdge(tuple<int, int> dest, U weight, flow<float> flu)
 {
-    edges.push_back(edge<T, U>(dest, weight));
+    edges.push_back(edge<T, U>(dest, weight, flu));
 }

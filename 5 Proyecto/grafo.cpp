@@ -42,7 +42,7 @@ grafo<T, U>::grafo(int _vertice) : matrix_ADY(_vertice) {
 }
 
 template<class T, class U>
-grafo<T, U>::~grafo() {}
+grafo<T, U>::~grafo() { }
 
 template<class T, class U>
 vector<int> grafo<T, U>::getVecindario(int node) {
@@ -169,38 +169,71 @@ vector<int> grafo<T, U>::getPath(int u, int v, const vector<vector<int>>& next) 
 template<class T, class U>
 void grafo<T, U>::showGrafo() {
     vector<node<T, U>>& nodes = matrix_ADY.getNodes();
+    int cont = 0;
     cout << endl;
     cout << "Representacion del grafo con flechas:" << endl;
 
-    int cont = 0;
-    for (int i = 0; i < vertices; ++i) {
-        cout << nodes[i].getName() << " (" << nodes[i].getData() <<")" ;
-        cout << "---> ";
+    switch(this->currentMode)
+    {
+        case mode_DIRIGIDO:
+            cout<< "MODO: DIRIGIDO: "<< endl;
+            for (int i = 0; i < vertices; ++i) {
+                cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
 
-        const vector<edge<T, U>>& edges = nodes[i].getEdges();
-        bool tieneVecinos = false;
+                const vector<edge<T, U>>& edges = nodes[i].getEdges();
+                bool tieneVecinos = false;
 
-        for (int j = cont; j < edges.size(); ++j) {
-            cont++;
-            const tuple<int, int>& destination = edges[j].getDestination();
-            int destino = get<1>(destination) - 1 ;
+                for (int j = cont; j < edges.size(); ++j) {
+                    cont++;
+                    const tuple<int, int>& destination = edges[j].getDestination();
+                    int destino = get<1>(destination) - 1 ;
 
-            if (destino >= 0 && destino < vertices) {
-                T valor = nodes[destino].getData();
-                
-                if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
-                    tieneVecinos = true;
-                    cout << nodes[destino].getName() << "(" << valor << ") ";
+                    if (destino >= 0 && destino < vertices) {
+                        T valor = nodes[destino].getData();
+                        
+                        if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
+                            tieneVecinos = true;
+                            cout<< "\t ---" << edges[j].getFlow() << "---> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                        }
+                    }
                 }
+                if (!tieneVecinos) {
+                    cout << "sin vecinos";
+                }
+                cout << endl; 
             }
-        }
-        if (!tieneVecinos) {
-            cout << "sin vecinos";
-        }
-        cout << endl; 
+        break;
+
+        case mode_NO_DIRIGIDO:
+            cout<< "MODO: NO DIRIGIDO: "<< endl;
+            for (int i = 0; i < vertices; ++i) {
+                cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
+
+                const vector<edge<T, U>>& edges = nodes[i].getEdges();
+                bool tieneVecinos = false;
+
+                for (int j = cont; j < edges.size(); ++j) {
+                    cont++;
+                    const tuple<int, int>& destination = edges[j].getDestination();
+                    int destino = get<1>(destination) - 1 ;
+
+                    if (destino >= 0 && destino < vertices) {
+                        T valor = nodes[destino].getData();
+                        
+                        if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
+                            tieneVecinos = true;
+                            cout<< "\t <---" << edges[j].getFlow() << "---> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                        }
+                    }
+                }
+                if (!tieneVecinos) {
+                    cout << "sin vecinos";
+                }
+                cout << endl; 
+            }
+            break;
     }
 }
-
 
 template <class T, class U>
 void grafo<T, U>::showRepresentation()

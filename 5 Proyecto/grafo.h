@@ -160,7 +160,10 @@ public:
 	 * @return Un vector de enteros que representa el camino mínimo desde el nodo `u` hasta el nodo `v`. Si no hay camino, se devuelve un vector vacío.
 	 */
 	vector<int> getPath(int u, int v, const vector<vector<int>>& next);
-
+	/**
+	 * @brief Muestra por pantalla los nodos utilizando los arcos para visualizar las conexiones de los nodos.
+	 * 
+	*/
 	void showGrafo();
 };
 #endif

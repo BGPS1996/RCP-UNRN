@@ -7,17 +7,18 @@
  * @brief Este archivo desarrolla la implementacion de los `nodos` y de los `arcos`.
 */
 
-
 #include <iostream>
 #include <tuple>
 #include <vector>
 
+#include "flow_capacity.h"
+#include "flow_capacity.cpp"
 using namespace std;
 
 /**
  @brief Clase que representa un arco en un grafo.
  * @tparam U Tipo de dato.
- * 
+ * @tparam flow Flujo en los arcos. (float).
 */
 template<class T, class U>
 class edge
@@ -25,19 +26,34 @@ class edge
 public:
     tuple<int, int> destination;                    ///< Tupla representando < Origen Nodo, Destino Nodo>
     U weight;                                       ///< Peso o costo del Arco.
+    flow<float> flujo;                              ///< Informacion de flujo.
+    
     /**
-    @brief Constructor por defecto.
-    *
+    * @brief Constructor por defecto.
     * @param[in] dest Tupla de enteros para representar la posicion.
     * @param[in] w Costo o Peso del arco.
     */ 
-    edge(tuple<int, int> dest, U w) : destination(dest), weight(w) { }
+    edge(tuple<int, int> dest, U w) : destination(dest), weight(w), flujo(0, 10) { }
+
+    /**
+    * @brief Constructor por defecto.
+    * @param[in] dest Tupla de enteros para representar la posicion.
+    * @param[in] w Costo o Peso del arco.
+    * @param[in] Tc Capacidad Total.
+    */ 
+    edge(tuple<int, int> dest, U w, flow<float> Tc) : destination(dest), weight(w), flujo(0, Tc) { }
 
     /**
      * @brief Getter del peso o costo del arco.
      * @return El peso o Costo.
-    */ 
-    U getWeight() const { return weight;}
+    */
+    U getWeight() const { return weight; }
+
+    /**
+     * @brief Getter del flujo.
+     * @return Flujo.
+    */
+    flow<float> getFlow() const { return flujo; }
 
     const tuple<int, int> & getDestination() const { return destination; }
 };
@@ -55,7 +71,7 @@ private:
     string name;                                    ///< Nombre, es opcional.
     T data;                                         ///< Dato representativo.
     tuple<unsigned long, unsigned long> location;   ///< Representa la tupla. (Posicion i, Posicion j)
-    vector<edge<T, U>> edges;                          ///< Los arcos que conectar al nodo. 
+    vector<edge<T, U>> edges;                       ///< Los arcos que conectar al nodo. 
 
 public:
     
@@ -68,7 +84,7 @@ public:
     /**
      * @brief Constructor con entradas.
      * @param[in] name Asignacion de nombre al nodo
-     * @param[in] data  Dato representativo.
+     * @param[in] data Dato representativo.
      * @param[in] loc Representa la ubicacion en la matriz adyacente.
     */
     node(string name, T data, tuple<unsigned long, unsigned long> loc): name(name), data(data), location(loc) { }
@@ -113,7 +129,7 @@ public:
      * @param[in] dest Tupla que representa la coneccion < Nodo origen, Nodo Destino> .
      * @param[in] weigth Peso o costo asignado a dicho arco.
     */
-    void addEdge(tuple<int, int> dest, U weight);
+    void addEdge(tuple<int, int> dest, U weight, flow<float>);
     
     /**
      * @brief Setter ubicacion en la funcion adyacente.
@@ -135,29 +151,30 @@ public:
     }
 
     friend istream& operator>>(istream& is, node<T, U>& n) {
-        cout << "Enter node name: ";
+        cout << "Nombre Nodo: ";
         is >> n.name;
 
-        cout << "Enter node data: ";
+        cout << "Dato Nodo: ";
         is >> n.data;
 
         //unsigned long x, y;
         //cout << "Enter node location (x y): ";
         //is >> x >> y;
-
+        // Por defecto en posicion (0, 0)
         n.location = make_tuple(0, 0);
 
         int numEdges;
-        cout << "Enter number of edges: ";
+        cout << "Numero de arcos: ";
         is >> numEdges;
 
         for (int i = 0; i < numEdges; ++i) {
             int destX, destY;
             U weight;
-            cout << "Enter edge destination (x y) and weight: ";
-            is >> destX >> destY >> weight;
+            flow<float> flujo;
+            cout << "Destino del arco (x y), peso, Flujo ";
+            is >> destX >> destY >> weight >> flujo;
 
-            n.addEdge(make_tuple(destX, destY), weight);
+            n.addEdge(make_tuple(destX, destY), weight, flujo);
         }
 
         return is;

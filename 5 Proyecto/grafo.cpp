@@ -1,17 +1,23 @@
 #include "grafo.h"
 
 template<class T, class U>
-grafo<T, U>::grafo() {
+grafo<T, U>::grafo()
+    : matrix_ADY(0)
+{
     this->vertices = 0;
     this->aristas = 0;
     this->currentMode = mode_NO_DIRIGIDO;
+    this->currentType = type_NONE;
 }
 
 template<class T, class U>
-grafo<T, U>::grafo(MODE op, int _vertice) {
+grafo<T, U>::grafo(MODE op, int _vertice)
+    : matrix_ADY(_vertice)
+{
     this->vertices = _vertice;
     this->aristas = 0;
     this->currentMode = op;
+    this->currentType = type_NONE;
 
     if (_vertice > 0) {
         node<T, U> aux;
@@ -25,10 +31,53 @@ grafo<T, U>::grafo(MODE op, int _vertice) {
 }
 
 template<class T, class U>
-grafo<T, U>::grafo(int _vertice) : matrix_ADY(_vertice) {
+grafo<T, U>::grafo(MODE op, int _vertice, TYPE ty)
+    : matrix_ADY(_vertice)
+{
+    this->vertices = _vertice;
+    this->aristas = 0;
+    this->currentMode = op;
+    this->currentType = ty;
+
+    if (_vertice > 0) {
+        node<T, U> aux;
+        for (int i = 0; i < _vertice; ++i) {
+            cin >> aux;
+            this->matrix_ADY.addNodo(aux, currentMode);
+        }
+    } else {
+        throw invalid_argument("Cantidad de Vertices no válida.");
+    }
+}
+
+template<class T, class U>
+grafo<T, U>::grafo(int _vertice)
+    : matrix_ADY(_vertice)
+{
     this->vertices = _vertice;
     this->aristas = 0;
     this->currentMode = mode_NO_DIRIGIDO;
+    this->currentType = type_NONE;
+
+    if (_vertice > 0) {
+        node<T, U> aux;
+        for (int i = 0; i < _vertice; ++i) {
+            cin >> aux;
+            this->matrix_ADY.addNodo(aux, currentMode);
+        }
+    } else {
+        throw invalid_argument("Cantidad de Vertices no valido.");
+    }
+}
+
+template<class T, class U>
+grafo<T, U>::grafo(int _vertice, TYPE ty)
+    : matrix_ADY(_vertice)
+{
+    this->vertices = _vertice;
+    this->aristas = 0;
+    this->currentMode = mode_NO_DIRIGIDO;
+    this->currentType = ty;
 
     if (_vertice > 0) {
         node<T, U> aux;
@@ -168,78 +217,130 @@ vector<int> grafo<T, U>::getPath(int u, int v, const vector<vector<int>>& next) 
 
 template<class T, class U>
 void grafo<T, U>::showGrafo() {
+
     vector<node<T, U>>& nodes = matrix_ADY.getNodes();
     int cont = 0;
     cout << endl;
     cout << "Representacion del grafo con flechas:" << endl;
 
-    switch(this->currentMode)
-    {
+    switch(this->currentMode) {
         case mode_DIRIGIDO:
-            cout<< "MODO: DIRIGIDO: "<< endl;
-            for (int i = 0; i < vertices; ++i) {
-                cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
+            cout << "MODO: DIRIGIDO: "<< endl;
 
-                const vector<edge<T, U>>& edges = nodes[i].getEdges();
-                bool tieneVecinos = false;
+            switch(this->currentType)
+            {
+                case type_FLOW:
+                    cout << "TIPO: FLUJO: "<< endl;
+                    for (int i = 0; i < vertices; ++i){
+                        cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
 
-                for (int j = cont; j < edges.size(); ++j) {
-                    cont++;
-                    const tuple<int, int>& destination = edges[j].getDestination();
-                    int destino = get<1>(destination) - 1 ;
+                        const vector<edge<T, U>>& edges = nodes[i].getEdges();
+                        bool tieneVecinos = false;
 
-                    if (destino >= 0 && destino < vertices) {
-                        T valor = nodes[destino].getData();
-                        
-                        if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
-                            tieneVecinos = true;
-                            cout<< "\t ---" << edges[j].getFlow() << "---> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                        for (int j = cont; j < edges.size(); ++j) {
+                            cont++;
+                            const tuple<int, int>& destination = edges[j].getDestination();
+                            int destino = get<1>(destination) - 1 ;
+
+                            if (destino >= 0 && destino < vertices) {
+                                T valor = nodes[destino].getData();
+                            
+                                if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
+                                    tieneVecinos = true;
+                                    cout<< "\t ---" << edges[j].getFlow() << "---> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                                }
+                            }
                         }
+                    
+                        if (!tieneVecinos) {
+                            cout << "sin vecinos";
+                        }
+                        cout << endl; 
                     }
-                }
-                if (!tieneVecinos) {
-                    cout << "sin vecinos";
-                }
-                cout << endl; 
+                break;
+
+                case type_NONE:
+                    cout << "TIPO: Por defecto: "<< endl;
+                    for (int i = 0; i < vertices; ++i){
+                        cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
+
+                        const vector<edge<T, U>>& edges = nodes[i].getEdges();
+                        bool tieneVecinos = false;
+
+                        for (int j = cont; j < edges.size(); ++j) {
+                            cont++;
+                            const tuple<int, int>& destination = edges[j].getDestination();
+                            int destino = get<1>(destination) - 1 ;
+
+                            if (destino >= 0 && destino < vertices) {
+                                T valor = nodes[destino].getData();
+                            
+                                if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
+                                    tieneVecinos = true;
+                                    cout<< "\t ------> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                                }
+                            }
+                        }
+                    
+                        if (!tieneVecinos) {
+                            cout << "sin vecinos";
+                        }
+                        cout << endl; 
+                    }
+                break;
+
+                case type_PETRI:
+                    cout << "TIPO: REDES DE PETRI: "<< endl;
+                break;
             }
-        break;
 
         case mode_NO_DIRIGIDO:
+            
             cout<< "MODO: NO DIRIGIDO: "<< endl;
-            for (int i = 0; i < vertices; ++i) {
-                cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
+            switch(this->currentType)
+            {
+                case type_NONE:
+                    cout << "TIPO: Por defecto: "<< endl;
+                    for (int i = 0; i < vertices; ++i){
+                        cout << " " <<nodes[i].getName() << "(" << nodes[i].getData() <<")" ;
 
-                const vector<edge<T, U>>& edges = nodes[i].getEdges();
-                bool tieneVecinos = false;
+                        const vector<edge<T, U>>& edges = nodes[i].getEdges();
+                        bool tieneVecinos = false;
 
-                for (int j = cont; j < edges.size(); ++j) {
-                    cont++;
-                    const tuple<int, int>& destination = edges[j].getDestination();
-                    int destino = get<1>(destination) - 1 ;
+                        for (int j = cont; j < edges.size(); ++j) {
+                            cont++;
+                            const tuple<int, int>& destination = edges[j].getDestination();
+                            int destino = get<1>(destination) - 1 ;
 
-                    if (destino >= 0 && destino < vertices) {
-                        T valor = nodes[destino].getData();
-                        
-                        if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
-                            tieneVecinos = true;
-                            cout<< "\t <---" << edges[j].getFlow() << "---> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                            if (destino >= 0 && destino < vertices) {
+                                T valor = nodes[destino].getData();
+                            
+                                if (valor != 0 && valor != numeric_limits<T>::max() && destino != i) {
+                                    tieneVecinos = true;
+                                    cout<< "\t <------> " << nodes[destino].getName() << "(" << valor << ") \t"<< endl;
+                                }
+                            }
                         }
+                    
+                        if (!tieneVecinos) {
+                            cout << "sin vecinos";
+                        }
+                        cout << endl; 
                     }
-                }
-                if (!tieneVecinos) {
-                    cout << "sin vecinos";
-                }
-                cout << endl; 
+                break;
+
+                case type_PETRI:
+                    cout << "TIPO: REDES DE PETRI: "<< endl;
+                break;
             }
-            break;
+        break;
     }
 }
 
 template <class T, class U>
 void grafo<T, U>::showRepresentation()
 {
-    switch(this->currentMode)
-    {
+    switch(this->currentMode) {
         case mode_DIRIGIDO:
             cout<< "MODO: DIRIGIDO: "<< endl;
             this->matrix_ADY.showMatrix();

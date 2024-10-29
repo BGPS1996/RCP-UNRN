@@ -27,7 +27,9 @@ private:
 	int vertices;       			///< Cantidad de nodos cargados en el grafo.
 	int aristas;        			///< Cantidad de arcos en el grafo.
 	MODE currentMode;   			///< Configuración del grafo: dirigido o no dirigido.
+	TYPE currentType;				///< Configuracion de grafo: Flujo o Petri.
 	adyacente<T, U> matrix_ADY;  	///< Matriz de adyacencia que representa el grafo.
+		
 	/**
 	 * @brief Función auxiliar para realizar DFS recursivo.
 	 * @param[in] node Nodo actual en el recorrido DFS.
@@ -36,6 +38,7 @@ private:
 	void DFSUtil(int node, vector<bool>& visited);
 
 public:
+
 	/**
 	 * @brief Constructor por defecto.
 	 * Inicializa los atributos en cero y configura el grafo como no dirigido.
@@ -50,11 +53,27 @@ public:
 	grafo(MODE mode, int vertices);
 
 	/**
+	 * @brief Constructor con configuraciónes del grafo.
+	 * @param[in] mode Configuración del grafo (dirigido o no dirigido).
+	 * @param[in] type Configuración del grafo (Petri, Flujo o Defecto).
+	 * @param[in] vertices Número de nodos en el grafo.
+	 */
+	grafo(MODE mode, int vertices, TYPE type);
+
+	/**
 	 * @brief Constructor con la cantidad de nodos.
 	 * Configura el grafo como no dirigido por defecto.
 	 * @param[in] vertices Número de nodos en el grafo.
 	 */
 	grafo(int vertices);
+
+	/**
+	 * @brief Constructor con la cantidad de nodos.
+	 * Configura el grafo como no dirigido por defecto.
+	 * @param[in] vertices Número de nodos en el grafo.
+	 * @param[in] type Configuración del grafo (Petri, Flujo o Defecto).
+	 */
+	grafo(int vertices, TYPE type);
 
 	/**
 	 * @brief Destructor del grafo.
@@ -74,6 +93,12 @@ public:
 	void setMode(MODE mode) { currentMode = mode; }
 
 	/**
+	 * @brief Establece el tipo del grafo.
+	 * @param[in] type TYPE del grafo.
+	 */
+	void setType(TYPE type) { currentType = type; }
+
+	/**
 	 * @brief Devuelve la cantidad de vértices del grafo.
 	 * @return Número de vértices.
 	 */
@@ -84,6 +109,12 @@ public:
 	 * @return Modo del grafo (dirigido o no dirigido).
 	 */
 	MODE getMode() const { return currentMode; }
+
+	/**
+	 * @brief Devuelve el modo de configuración del grafo.
+	 * @return Type del grafo.
+	 */
+	TYPE getType() const { return currentType; }
 
 	/**
 	 * @brief Obtiene los vecinos de un nodo dado.

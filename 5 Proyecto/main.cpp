@@ -9,7 +9,7 @@ int main(int argc, char const *argv[]) {
 	system("cls");
     try {
         
-        grafo<int, int> preba(3);
+        grafo<int, int> preba(mode_DIRIGIDO, 3, type_FLOW);
 		preba.showGrafo();
 
     } catch (const exception& e) {

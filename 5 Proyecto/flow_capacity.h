@@ -95,7 +95,7 @@ public:
 	ostream& operator<<(ostream& os, const flow<T>& f) 
 	{
 	    os << " (" << f.actual_capacity 
-	       << "/ " << f.total_capacity << ") ";
+	       << "/" << f.total_capacity << ") ";
 	    return os;
 	}
 
@@ -104,7 +104,7 @@ istream& operator>>(istream& is, flow<T>& f)
 {
     T actual, total;
  	
- 	cout << " Selecciona Flujo actual: ";
+ 	//cout << " Selecciona Flujo actual: ";
 
     is >> actual;
 

@@ -20,4 +20,22 @@ enum MODE
     mode_NO_DIRIGIDO   ///< Modo no dirigido: los arcos son bidireccionales.
 };
 
+
+/**
+ * @enum TYPE
+ * @brief Enumeración que representa el typo de grafo.
+ * 
+ * Esta enumeración tiene dos posibles valores:
+ * - `type_FLOW`: El grafo se implementa pensando en flujo.
+ * - `type_PETRI`: El grafo se implementa pensando en los grafos de Petri.
+ */
+enum TYPE
+{
+    type_NONE,          ///< Modo por defecto: No tiene ninguna caracteristica especial.
+    type_FLOW,          ///< Modo Flujo: Este modo utiliza el objeto `flow_capacity`
+    type_PETRI          ///< Modo Petri: Se utiliza para trabajar con redes de Petri.
+
+};
+
+
 #endif // MODES_H

@@ -41,7 +41,7 @@ public:
     * @param[in] w Costo o Peso del arco.
     * @param[in] Tc Capacidad Total.
     */ 
-    edge(tuple<int, int> dest, U w, flow<float> Tc) : destination(dest), weight(w), flujo(0, Tc) { }
+    edge(tuple<int, int> dest, U w, flow<float> Tc) : destination(dest), weight(w), flujo(Tc) { }
 
     /**
      * @brief Getter del peso o costo del arco.

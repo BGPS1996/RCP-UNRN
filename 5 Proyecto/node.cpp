@@ -17,3 +17,9 @@ void node<T, U>::addEdge(tuple<int, int> dest, U weight, flow<float> flu)
 {
     edges.push_back(edge<T, U>(dest, weight, flu));
 }
+
+template<class T, class U>
+void node<T, U>::setEspecialization(SPECIALIZATION spz)
+{
+    this->type = spz;
+}

@@ -6,6 +6,7 @@ grafo<T, U>::grafo()
 {
     this->vertices = 0;
     this->aristas = 0;
+    this->capacidad = 0;
     this->currentMode = mode_NO_DIRIGIDO;
     this->currentType = type_NONE;
 }
@@ -20,11 +21,43 @@ grafo<T, U>::grafo(MODE op, int _vertice)
     this->currentType = type_NONE;
 
     if (_vertice > 0) {
-        node<T, U> aux;
-        for (int i = 0; i < _vertice; ++i) {
-            cin >> aux;
-            this->matrix_ADY.addNodo(aux, currentMode);
+
+        switch(this->currentType)
+        {
+            case type_NONE:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }
+                break;
+            case type_FLOW:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+
+                    cin >> aux;
+
+                    if (i == 0) {
+                        aux.setEspecialization(szt_SOURCE);
+                        // añadir capacidad.
+                    } else if (i == _vertice - 1) {
+                        aux.setEspecialization(szt_TARGET);
+                    }
+
+                    this->matrix_ADY.addNodo(aux, currentMode);
+
+                    this->capacidad = configCapacidad();
+                }
+                break;
+            case type_PETRI:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }            
+                break;
         }
+
     } else {
         throw invalid_argument("Cantidad de Vertices no valido.");
     }
@@ -40,13 +73,42 @@ grafo<T, U>::grafo(MODE op, int _vertice, TYPE ty)
     this->currentType = ty;
 
     if (_vertice > 0) {
-        node<T, U> aux;
-        for (int i = 0; i < _vertice; ++i) {
-            cin >> aux;
-            this->matrix_ADY.addNodo(aux, currentMode);
+
+        switch(this->currentType)
+        {
+            case type_NONE:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }
+                break;
+            case type_FLOW:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+
+                    cin >> aux;
+
+                    if (i == 0) {
+                        aux.setEspecialization(szt_SOURCE);
+                    } else if (i == _vertice - 1) {
+                        aux.setEspecialization(szt_TARGET);
+                    }
+
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                    this->capacidad = configCapacidad();
+                }
+                break;
+            case type_PETRI:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }            
+                break;
         }
     } else {
-        throw invalid_argument("Cantidad de Vertices no válida.");
+        throw invalid_argument("Cantidad de Vertices no valido.");
     }
 }
 
@@ -60,10 +122,39 @@ grafo<T, U>::grafo(int _vertice)
     this->currentType = type_NONE;
 
     if (_vertice > 0) {
-        node<T, U> aux;
-        for (int i = 0; i < _vertice; ++i) {
-            cin >> aux;
-            this->matrix_ADY.addNodo(aux, currentMode);
+
+        switch(this->currentType)
+        {
+            case type_NONE:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }
+                break;
+            case type_FLOW:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+
+                    cin >> aux;
+
+                    if (i == 0) {
+                        aux.setEspecialization(szt_SOURCE);
+                    } else if (i == _vertice - 1) {
+                        aux.setEspecialization(szt_TARGET);
+                    }
+
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                    this->capacidad = configCapacidad();
+                }
+                break;
+            case type_PETRI:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }            
+                break;
         }
     } else {
         throw invalid_argument("Cantidad de Vertices no valido.");
@@ -77,15 +168,44 @@ grafo<T, U>::grafo(int _vertice, TYPE ty)
     this->vertices = _vertice;
     this->aristas = 0;
     this->currentMode = mode_NO_DIRIGIDO;
+    this->capacidad = 0;
     this->currentType = ty;
 
     if (_vertice > 0) {
-        node<T, U> aux;
-        for (int i = 0; i < _vertice; ++i) {
-            cin >> aux;
-            this->matrix_ADY.addNodo(aux, currentMode);
+        switch(this->currentType)
+        {
+            case type_NONE:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }
+                break;
+            case type_FLOW:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+
+                    cin >> aux;
+
+                    if (i == 0) {
+                        aux.setEspecialization(szt_SOURCE);
+                    } else if (i == _vertice - 1) {
+                        aux.setEspecialization(szt_TARGET);
+                    }
+
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                    this->capacidad = configCapacidad();
+                }
+                break;
+            case type_PETRI:
+                for (int i = 0; i < _vertice; ++i) {
+                    node<T, U> aux;
+                    cin >> aux;
+                    this->matrix_ADY.addNodo(aux, currentMode);
+                }            
+                break;
         }
-    } else {
+    }else {
         throw invalid_argument("Cantidad de Vertices no valido.");
     }
 }
@@ -351,4 +471,16 @@ void grafo<T, U>::showRepresentation()
             this->matrix_ADY.showMatrix();
             break;
     }
+}
+
+template<class T, class U>
+float grafo<T, U>::configCapacidad() {
+    vector<node<T, U>>& nodes = matrix_ADY.getNodes();
+    const vector<edge<T, U>>& edges = nodes[0].getEdges();
+    flow<float> aux(0, 0);
+
+    for (int i = 0; i < edges.size(); ++i) {
+        aux += edges[i].getFlow();
+    }
+    return aux.getCapacityTotal();
 }

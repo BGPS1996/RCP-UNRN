@@ -13,6 +13,9 @@
 
 #include "flow_capacity.h"
 #include "flow_capacity.cpp"
+
+#include "modes.h"
+
 using namespace std;
 
 /**
@@ -71,15 +74,16 @@ private:
     string name;                                    ///< Nombre, es opcional.
     T data;                                         ///< Dato representativo.
     tuple<unsigned long, unsigned long> location;   ///< Representa la tupla. (Posicion i, Posicion j)
-    vector<edge<T, U>> edges;                       ///< Los arcos que conectar al nodo. 
+    vector<edge<T, U>> edges;                       ///< Los arcos que conectar al nodo.
+    SPECIALIZATION type;                            ///< Especializacion del nodo.
 
 public:
     
     /**
      * @brief Constructores con sus variantes.
-     * La funcion por defecto le asigna al nodo nombre "NN", y locacion en la matriz en (0, 0).
+     * La funcion por defecto le asigna al nodo nombre "NN", y locacion en la matriz en (0, 0), la especializacion sera por defecto NONE.
     */ 
-    node(): name("NN"), data(T(0)), location(0, 0) { }
+    node(): name("NN"), data(T(0)), location(0, 0), type(szt_NONE) { }
     
     /**
      * @brief Constructor con entradas.
@@ -89,6 +93,15 @@ public:
     */
     node(string name, T data, tuple<unsigned long, unsigned long> loc): name(name), data(data), location(loc) { }
     
+    /**
+     * @brief Constructor con entradas.
+     * @param[in] name Asignacion de nombre al nodo
+     * @param[in] data Dato representativo.
+     * @param[in] loc Representa la ubicacion en la matriz adyacente.
+     * @param[in] s Tipo de nodo.
+    */
+    node(string name, T data, tuple<unsigned long, unsigned long> loc, SPECIALIZATION s): name(name), data(data), location(loc), type(s) { }    
+
     ~node();
 
     /**
@@ -105,6 +118,12 @@ public:
     */
     T getData() const { return data; }
     
+    /**
+     * @brief Obtener la especializacion.
+     * @return Retorna la especialzacion.
+    */
+    SPECIALIZATION getType() const { return type; }
+
     /**
      * @brief Getter Nombre
      * Por defecto el nombre del nodo es "NN".
@@ -136,6 +155,12 @@ public:
      * @param[in] loc Redefine la locacion del Nodo.
     */
     void setLocation(tuple<unsigned long, unsigned long> loc);
+
+    /**
+     * @brief Setter la especializacion
+     * @param[in] spz Redefine la especializacion.
+    */
+    void setEspecialization(SPECIALIZATION spz);
 
     friend ostream& operator<<(ostream& os, const node<T, U>& n) {
         os << "Node Name: " << n.name << ", Data: " << n.data 

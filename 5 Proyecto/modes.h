@@ -16,10 +16,9 @@
  */
 enum MODE
 {
-    mode_DIRIGIDO,     ///< Modo dirigido: los arcos tienen dirección.
-    mode_NO_DIRIGIDO   ///< Modo no dirigido: los arcos son bidireccionales.
+    mode_DIRIGIDO,       ///< Modo dirigido: los arcos tienen dirección.
+    mode_NO_DIRIGIDO     ///< Modo no dirigido: los arcos son bidireccionales.
 };
-
 
 /**
  * @enum TYPE
@@ -37,5 +36,21 @@ enum TYPE
 
 };
 
+/**
+ * @enum Specialization
+ * @brief Enumeración que declara el tipo de Nodo
+ * 
+ * Esta enumeración tiene 3 posibles especialidades:
+ * - `szt_NONE`: Nodo sin especialidad.
+ * - `szt_SOURCE`: Nodo origen.
+ * - `szt_TARGET`: Nodo objetivo.
+ */
+enum SPECIALIZATION
+{
+    szt_NONE,               ///< Nodo sin especialidad.
+    szt_SOURCE,             ///< Nodo origen.
+    szt_TARGET              ///< Nodo objetivo.
+
+};
 
 #endif // MODES_H

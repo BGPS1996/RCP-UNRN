@@ -112,4 +112,31 @@ istream& operator>>(istream& is, flow<T>& f)
     return is;
 }
 
+/**
+ * @brief Sobrecarga del operador + para la clase flow.
+ * Suma la capacidad actual y total de dos objetos flow.
+ * @tparam T Tipo de dato para el contenido del flujo.
+ * @param[in] f1 Primer objeto flow.
+ * @param[in] f2 Segundo objeto flow.
+ * @return Un nuevo objeto flow con las capacidades sumadas.
+ */
+template<class T>
+flow<T> operator+(const flow<T>& f1, const flow<T>& f2) {
+    T new_actual_capacity = f1.actual_capacity + f2.actual_capacity;
+    T new_total_capacity = f1.total_capacity + f2.total_capacity;
+    return flow<T>(new_actual_capacity, new_total_capacity);
+}
+
+/**
+ * @brief Sobrecarga del operador += para la clase flow.
+ * Suma las capacidades de otro objeto flow al objeto actual.
+ * @param[in] other Otro objeto flow cuyos valores se sumarán.
+ * @return Una referencia al objeto flow modificado.
+ */
+flow<T>& operator+=(const flow<T>& other) {
+    this->actual_capacity += other.actual_capacity;
+    this->total_capacity += other.total_capacity;
+    return *this;
+}
+
 #endif // FLOW_CAPACITY_H

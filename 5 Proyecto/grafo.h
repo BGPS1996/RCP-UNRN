@@ -1,5 +1,6 @@
 #ifndef GRAFO_H
 #define GRAFO_H
+
 /**
  * @file grafo.h 
  * @author BGPS
@@ -26,6 +27,7 @@ class grafo
 private:
 	int vertices;       			///< Cantidad de nodos cargados en el grafo.
 	int aristas;        			///< Cantidad de arcos en el grafo.
+	flow<float> capacidad;        	///< Capacidad de la red de flujo.
 	MODE currentMode;   			///< Configuración del grafo: dirigido o no dirigido.
 	TYPE currentType;				///< Configuracion de grafo: Flujo o Petri.
 	adyacente<T, U> matrix_ADY;  	///< Matriz de adyacencia que representa el grafo.
@@ -36,6 +38,12 @@ private:
 	 * @param[in] visited Vector que indica si un nodo ha sido visitado.
 	 */
 	void DFSUtil(int node, vector<bool>& visited);
+
+	/**
+	 * @brief Función auxiliar para calcular la capacidad de flujo.
+	 * @return Retorna la capacidad.
+	 */
+	float configCapacidad();
 
 public:
 
@@ -191,10 +199,14 @@ public:
 	 * @return Un vector de enteros que representa el camino mínimo desde el nodo `u` hasta el nodo `v`. Si no hay camino, se devuelve un vector vacío.
 	 */
 	vector<int> getPath(int u, int v, const vector<vector<int>>& next);
+	
 	/**
 	 * @brief Muestra por pantalla los nodos utilizando los arcos para visualizar las conexiones de los nodos.
 	 * 
 	*/
 	void showGrafo();
+
+
 };
+
 #endif

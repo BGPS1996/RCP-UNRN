@@ -152,7 +152,7 @@ public:
 	 * @brief Realiza un recorrido BFS (Breadth-First Search) desde un nodo inicial.
 	 * @param[in] startNode Índice del nodo desde el cual comenzar el recorrido.
 	 */
-	void BFS(int startNode);
+	vector<bool> BFS(int startNode);
 
 	/**
 	 * @brief Realiza un recorrido DFS (Depth-First Search) desde un nodo inicial.
@@ -202,11 +202,34 @@ public:
 	
 	/**
 	 * @brief Muestra por pantalla los nodos utilizando los arcos para visualizar las conexiones de los nodos.
-	 * 
+	 * utiliza configuracion que trae el grafo, para mostrar su reprensentacion.
+	 * No se encuentra implementado para Modo Redes de Petri.
 	*/
 	void showGrafo();
 
-
+    /**
+     * @brief Encuentra el corte minimo en una red de flujo a partir de un nodo de origen.
+     * 
+     * Esta funcion utiliza un recorrido BFS modificado para encontrar todos los nodos alcanzables 
+     * desde el nodo de origen en el grafo residual, donde solo se consideran arcos con capacidad residual positiva.
+     * Luego, identifica los arcos que cruzan de los nodos alcanzables a los no alcanzables, los cuales forman 
+     * el corte mínimo.
+     * 
+     * @param[in] s indice del nodo de origen.
+     * @return Un vector de pares de enteros, donde cada par representa un arco en el corte mínimo, desde el conjunto alcanzable (S) al no alcanzable (T).
+     */
+	vector<pair<int, int>> findMinCut(int s);
+    
+    /**
+     * @brief Calcula el valor del corte mínimo en una red de flujo.
+     * 
+     * Esta función calcula la suma de las capacidades de los arcos en el corte minimo, lo cual representa 
+     * el valor total del flujo máximo posible en la red de flujo desde el nodo de origen.
+     * 
+     * @param[in] s indice del nodo de origen.
+     * @return El valor del corte minimo, de tipo U.
+     */
+	U minCutValue(int s);
 };
 
 #endif

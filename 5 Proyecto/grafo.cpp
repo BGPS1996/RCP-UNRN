@@ -257,7 +257,7 @@ bool grafo<T, U>::esConexo() {
 }
 
 template<class T, class U>
-void grafo<T, U>::BFS(int startNode) {
+vector<bool> grafo<T, U>::BFS(int startNode) {
     vector<bool> visited(this->vertices, false);
     queue<int> q;
     visited[startNode] = true;
@@ -268,13 +268,15 @@ void grafo<T, U>::BFS(int startNode) {
         q.pop();
 
         for (int i = 0; i < this->vertices; ++i) {
-            if (this->matrix_ADY.getValue(current, i) != numeric_limits<U>::max() && !visited[i]) {
+            if (this->matrix_ADY.getResidualCapacity(current, i) > 0 && !visited[i]) {
                 visited[i] = true;
                 q.push(i);
             }
         }
     }
+    return visited;
 }
+
 
 template<class T, class U>
 void grafo<T, U>::DFSUtil(int node, vector<bool>& visited) {
@@ -483,4 +485,34 @@ float grafo<T, U>::configCapacidad() {
         aux += edges[i].getFlow();
     }
     return aux.getCapacityTotal();
+}
+
+template<class T, class U>
+vector<pair<int, int>> grafo<T, U>::findMinCut(int source) {
+    vector<bool> visited = BFS(source);
+    vector<pair<int, int>> minCutEdges;
+
+    for (int u = 0; u < this->vertices; ++u) {
+        if (visited[u]) {
+            for (int v = 0; v < this->vertices; ++v) {
+                if (!visited[v] && this->matrix_ADY.getValue(u, v) > 0) {
+                    minCutEdges.emplace_back(u, v);
+                }
+            }
+        }
+    }
+    return minCutEdges;
+}
+
+template<class T, class U>
+U grafo<T, U>::minCutValue(int source) {
+    vector<pair<int, int>> minCutEdges = findMinCut(source);
+    U minCutVal = 0;
+
+    for (auto& edge : minCutEdges) {
+        int u = edge.first, v = edge.second;
+        minCutVal += this->matrix_ADY.getValue(u, v);
+    }
+
+    return minCutVal;
 }

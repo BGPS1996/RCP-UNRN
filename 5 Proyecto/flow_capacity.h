@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <exception>
 
 using namespace std;
 
@@ -33,7 +34,14 @@ public:
 	 * @param[in] Ac Parametro de Capacidad Actual.
 	 * @param[in] At Parametro de Capacidad Total.
 	 */
-	flow(T Ac, T At) : actual_capacity(Ac), total_capacity(At) { }
+	flow(T Ac, T At) : actual_capacity(Ac), total_capacity(At) {
+    if (At < 0) {
+        throw invalid_argument("La capacidad total no puede ser negativa.");
+    }
+    if (Ac > At) {
+        throw invalid_argument("La capacidad actual no puede exceder la capacidad total.");
+    }
+}
 
 	/**
 	 * @brief Constructor con capacidad total seleccionada.
@@ -82,6 +90,18 @@ public:
 	 * @param[in] newCapacity Capacidad nueva.
 	 */
 	void setTotalCapacity(T newCapacity) { total_capacity = newCapacity; }
+
+	/**
+	 * @brief Sobrecarga del operador += para la clase flow.
+	 * Suma las capacidades de otro objeto flow al objeto actual.
+	 * @param[in] other Otro objeto flow cuyos valores se sumarán.
+	 * @return Una referencia al objeto flow modificado.
+	 */
+	flow& operator+=(const flow<T>& other) {
+        this->actual_capacity += other.actual_capacity;
+        this->total_capacity += other.total_capacity;
+        return *this;
+    }
 };
 
 	/**
@@ -125,18 +145,6 @@ flow<T> operator+(const flow<T>& f1, const flow<T>& f2) {
     T new_actual_capacity = f1.actual_capacity + f2.actual_capacity;
     T new_total_capacity = f1.total_capacity + f2.total_capacity;
     return flow<T>(new_actual_capacity, new_total_capacity);
-}
-
-/**
- * @brief Sobrecarga del operador += para la clase flow.
- * Suma las capacidades de otro objeto flow al objeto actual.
- * @param[in] other Otro objeto flow cuyos valores se sumarán.
- * @return Una referencia al objeto flow modificado.
- */
-flow<T>& operator+=(const flow<T>& other) {
-    this->actual_capacity += other.actual_capacity;
-    this->total_capacity += other.total_capacity;
-    return *this;
 }
 
 #endif // FLOW_CAPACITY_H
